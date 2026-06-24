@@ -165,17 +165,17 @@ export default function CatalogPage() {
     }, 800)
   }
 
-  if (!ready) return <LoadingScreen />
+  if (!ready) return <LoadingScreen shopSettings={shopSettings} />
   if (view === 'admin-login') return (
-    <AdminLogin onLogin={(u) => { setAdminUser(u); setView('front'); notify(`ยินดีต้อนรับ Admin: ${u}`) }}
+    <AdminLogin shopSettings={shopSettings} onLogin={(u) => { setAdminUser(u); setView('front'); notify(`ยินดีต้อนรับ Admin: ${u}`) }}
       onBack={() => setView('front')} />
   )
   if (view === 'cust-login') return (
-    <CustLogin customers={customers} onLogin={(u) => { setCustUser(u); setView('front'); notify(`ยินดีต้อนรับ ${u.name}`) }}
+    <CustLogin shopSettings={shopSettings} customers={customers} onLogin={(u) => { setCustUser(u); setView('front'); notify(`ยินดีต้อนรับ ${u.name}`) }}
       onBack={() => setView('front')} onReg={() => setView('register')} />
   )
   if (view === 'register') return (
-    <Register onSave={async (data) => {
+    <Register shopSettings={shopSettings} onSave={async (data) => {
       const { data: newCust, error } = await db.from('customers').insert([data]).select().single()
       if (error) { notify('สมัครสมาชิกไม่สำเร็จ: ' + error.message, 'err'); return }
       setCustomers((prev) => [newCust, ...prev])
@@ -196,9 +196,12 @@ export default function CatalogPage() {
       <div style={{ background: '#0d0d0d', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 64, gap: 12 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <div style={{ width: 38, height: 38, background: 'linear-gradient(135deg,#c00,#800)', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 18, color: '#fff' }}>S</div>
+            {shopSettings.logo_url
+              ? <img src={shopSettings.logo_url} alt='logo' style={{ width: 38, height: 38, borderRadius: 8, objectFit: 'cover', flexShrink: 0 }} />
+              : <div style={{ width: 38, height: 38, background: 'linear-gradient(135deg,#c00,#800)', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 18, color: '#fff', flexShrink: 0 }}>S</div>
+            }
             <div>
-              <div style={{ fontWeight: 700, fontSize: 15 }}>รวมแบบเสื้อและสินค้าทั้งหมด</div>
+              <div style={{ fontWeight: 700, fontSize: 15 }}>{shopSettings.shop_name || 'รวมแบบเสื้อและสินค้าทั้งหมด'}</div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                 <span style={{ fontSize: 9, color: 'rgba(255,255,255,0.22)', letterSpacing: 2 }}>SHIRT CATALOG</span>
                 <span style={{ fontSize: 9, color: '#3d9a3d', display: 'flex', alignItems: 'center', gap: 3 }}>
@@ -478,10 +481,13 @@ export default function CatalogPage() {
 }
 
 /* ── Loading ── */
-function LoadingScreen() {
+function LoadingScreen({ shopSettings }: { shopSettings?: { shop_name: string; logo_url: string | null } }) {
   return (
     <div style={{ minHeight: '100vh', background: '#0a0a0a', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 20 }}>
-      <div style={{ width: 50, height: 50, background: 'linear-gradient(135deg,#c00,#800)', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 24, color: '#fff' }}>S</div>
+      {shopSettings?.logo_url
+        ? <img src={shopSettings.logo_url} alt='logo' style={{ width: 50, height: 50, borderRadius: 12, objectFit: 'cover' }} />
+        : <div style={{ width: 50, height: 50, background: 'linear-gradient(135deg,#c00,#800)', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 24, color: '#fff' }}>S</div>
+      }
       <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: 13 }}>กำลังโหลดข้อมูลจาก Supabase...</div>
       <div style={{ width: 160, height: 3, background: '#1c1c1c', borderRadius: 2, overflow: 'hidden' }}>
         <div style={{ height: '100%', background: '#c00', animation: 'loading 1.2s ease-in-out infinite', borderRadius: 2 }} />
@@ -1294,10 +1300,10 @@ function CustomerMgr({ customers, setCustomers, notify }: {
 }
 
 /* ── Auth Pages ── */
-function AdminLogin({ onLogin, onBack }: { onLogin: (u: string) => void, onBack: () => void }) {
+function AdminLogin({ onLogin, onBack, shopSettings }: { onLogin: (u: string) => void, onBack: () => void, shopSettings?: { shop_name: string; logo_url: string | null } }) {
   const [id, setId] = useState(''); const [pw, setPw] = useState(''); const [err, setErr] = useState('')
   return (
-    <AuthShell title="เข้าสู่ระบบ Admin" badge="ADMIN ONLY">
+    <AuthShell title="เข้าสู่ระบบ Admin" badge="ADMIN ONLY" shopSettings={shopSettings}>
       <input className="input-d" placeholder="Name ID เช่น ceo edit00" value={id} onChange={(e) => setId(e.target.value)} style={{ marginBottom: 10 }} />
       <input className="input-d" type="password" placeholder="Password" value={pw} onChange={(e) => setPw(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && (ADMIN_ACCOUNTS[id] === pw ? onLogin(id) : setErr('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง'))} style={{ marginBottom: 14 }} />
       {err && <ErrMsg msg={err} />}
@@ -1307,13 +1313,13 @@ function AdminLogin({ onLogin, onBack }: { onLogin: (u: string) => void, onBack:
   )
 }
 
-function CustLogin({ customers, onLogin, onBack, onReg }: {
-  customers: Customer[], onLogin: (u: Customer) => void, onBack: () => void, onReg: () => void
+function CustLogin({ customers, onLogin, onBack, onReg, shopSettings }: {
+  customers: Customer[], onLogin: (u: Customer) => void, onBack: () => void, onReg: () => void, shopSettings?: { shop_name: string; logo_url: string | null }
 }) {
   const [em, setEm] = useState(''); const [pw, setPw] = useState(''); const [err, setErr] = useState('')
   const go = () => { const u = customers.find((c) => c.email === em && c.password === pw); if (u) onLogin(u); else setErr('อีเมลหรือรหัสผ่านไม่ถูกต้อง') }
   return (
-    <AuthShell title="เข้าสู่ระบบสมาชิก">
+    <AuthShell title="เข้าสู่ระบบสมาชิก" shopSettings={shopSettings}>
       <input className="input-d" placeholder="อีเมล" value={em} onChange={(e) => setEm(e.target.value)} style={{ marginBottom: 10 }} />
       <input className="input-d" type="password" placeholder="รหัสผ่าน" value={pw} onChange={(e) => setPw(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && go()} style={{ marginBottom: 14 }} />
       {err && <ErrMsg msg={err} />}
@@ -1324,8 +1330,8 @@ function CustLogin({ customers, onLogin, onBack, onReg }: {
   )
 }
 
-function Register({ customers, onSave, onBack }: {
-  customers: Customer[], onSave: (d: Omit<Customer, 'id' | 'joined_at'>) => Promise<void>, onBack: () => void
+function Register({ customers, onSave, onBack, shopSettings }: {
+  customers: Customer[], onSave: (d: Omit<Customer, 'id' | 'joined_at'>) => Promise<void>, onBack: () => void, shopSettings?: { shop_name: string; logo_url: string | null }
 }) {
   const [f, setF] = useState({ name: '', email: '', phone: '', facebook: '', password: '', confirm: '' })
   const [err, setErr] = useState('')
@@ -1340,7 +1346,7 @@ function Register({ customers, onSave, onBack }: {
     setSaving(false)
   }
   return (
-    <AuthShell title="สมัครสมาชิก" sub="ข้อมูลถูกเก็บใน Supabase อย่างปลอดภัย">
+    <AuthShell title="สมัครสมาชิก" sub="ข้อมูลถูกเก็บใน Supabase อย่างปลอดภัย" shopSettings={shopSettings}>
       {([['name', 'ชื่อ-นามสกุล *', 'text'], ['email', 'อีเมล *', 'email'], ['phone', 'เบอร์โทรศัพท์', 'tel'], ['facebook', 'Facebook (แนะนำ)', 'text'], ['password', 'รหัสผ่าน *', 'password'], ['confirm', 'ยืนยันรหัสผ่าน *', 'password']] as const).map(([k, lb, tp]) => (
         <input key={k} className="input-d" type={tp} placeholder={lb} value={(f as any)[k]} onChange={(e) => set(k, e.target.value)} style={{ marginBottom: 10 }} />
       ))}
@@ -1351,12 +1357,15 @@ function Register({ customers, onSave, onBack }: {
   )
 }
 
-function AuthShell({ title, badge, sub, children }: { title: string, badge?: string, sub?: string, children: React.ReactNode }) {
+function AuthShell({ title, badge, sub, children, shopSettings }: { title: string, badge?: string, sub?: string, children: React.ReactNode, shopSettings?: { shop_name: string; logo_url: string | null } }) {
   return (
     <div style={{ minHeight: '100vh', background: '#0a0a0a', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
       <div style={{ background: '#111', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 14, padding: '36px 32px', width: '100%', maxWidth: 400 }}>
         <div style={{ textAlign: 'center', marginBottom: 24 }}>
-          <div style={{ width: 50, height: 50, background: 'linear-gradient(135deg,#c00,#800)', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 24, color: '#fff', margin: '0 auto 14px' }}>S</div>
+          {shopSettings?.logo_url
+            ? <img src={shopSettings.logo_url} alt='logo' style={{ width: 50, height: 50, borderRadius: 12, objectFit: 'cover', margin: '0 auto 14px', display: 'block' }} />
+            : <div style={{ width: 50, height: 50, background: 'linear-gradient(135deg,#c00,#800)', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 24, color: '#fff', margin: '0 auto 14px' }}>S</div>
+          }
           {badge && <div style={{ display: 'inline-block', background: '#c00', fontSize: 9, padding: '2px 10px', borderRadius: 3, fontWeight: 700, letterSpacing: 2, color: '#fff', marginBottom: 10 }}>{badge}</div>}
           <div style={{ fontWeight: 700, fontSize: 18, color: '#fff' }}>{title}</div>
           {sub && <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', marginTop: 5 }}>{sub}</div>}
