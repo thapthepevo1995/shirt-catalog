@@ -185,15 +185,15 @@ export default function CatalogPage() {
   )
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0a0a0a' }}>
+    <div style={{ minHeight: '100vh', background: '#ffffff' }}>
       {toast && (
-        <div style={{ position: 'fixed', top: 20, right: 20, zIndex: 9999, background: toast.type === 'ok' ? '#0c2210' : '#220c0c', border: `1px solid ${toast.type === 'ok' ? '#266626' : '#c00'}`, color: toast.type === 'ok' ? '#6fdf6f' : '#ff8080', padding: '11px 18px', borderRadius: 7, fontSize: 13, fontWeight: 500, boxShadow: '0 4px 24px rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', gap: 8 }}>
+        <div style={{ position: 'fixed', top: 20, right: 20, zIndex: 9999, background: toast.type === 'ok' ? '#0c2210' : '#220c0c', border: `1px solid ${toast.type === 'ok' ? '#266626' : '#D80000'}`, color: toast.type === 'ok' ? '#6fdf6f' : '#ff8080', padding: '11px 18px', borderRadius: 7, fontSize: 13, fontWeight: 500, boxShadow: '0 4px 24px rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', gap: 8 }}>
           {toast.type === 'ok' ? '✓' : '✕'} {toast.msg}
         </div>
       )}
 
       {/* Header */}
-      <div style={{ background: '#0d0d0d', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
+      <div style={{ background: '#ffffff', borderBottom: '1px solid #e5e5e5' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 64, gap: 12 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             {shopSettings.logo_url
@@ -203,7 +203,7 @@ export default function CatalogPage() {
             <div>
               <div style={{ fontWeight: 700, fontSize: 15 }}>{shopSettings.shop_name || 'รวมแบบเสื้อและสินค้าทั้งหมด'}</div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                <span style={{ fontSize: 9, color: 'rgba(255,255,255,0.22)', letterSpacing: 2 }}>SHIRT CATALOG</span>
+                <span style={{ fontSize: 9, color: '#aaa', letterSpacing: 2 }}>SHIRT CATALOG</span>
                 <span style={{ fontSize: 9, color: '#3d9a3d', display: 'flex', alignItems: 'center', gap: 3 }}>
                   <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#3d9a3d', display: 'inline-block' }} />
                   Supabase Connected
@@ -215,13 +215,13 @@ export default function CatalogPage() {
             {adminUser ? (
               <>
                 <span style={{ background: 'linear-gradient(90deg,#c00,#800)', fontSize: 10, padding: '2px 8px', borderRadius: 3, fontWeight: 700, letterSpacing: 1, color: '#fff' }}>ADMIN</span>
-                <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)' }}>{adminUser}</span>
+                <span style={{ fontSize: 12, color: '#888' }}>{adminUser}</span>
                 <button className="btn-outline sm" onClick={() => setShowCustMgr(!showCustMgr)}>{showCustMgr ? '← กลับ' : `สมาชิก (${customers.length})`}</button>
                 <button className="btn-outline sm" onClick={() => { setAdminUser(null); setShowCustMgr(false); notify('ออกจากระบบแล้ว', 'err') }}>ออก</button>
               </>
             ) : custUser ? (
               <>
-                <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)' }}>👤 {custUser.name}</span>
+                <span style={{ fontSize: 12, color: '#888' }}>👤 {custUser.name}</span>
                 <button className="btn-outline sm" onClick={() => { setCustUser(null); notify('ออกจากระบบแล้ว', 'err') }}>ออก</button>
               </>
             ) : (
@@ -244,12 +244,12 @@ export default function CatalogPage() {
 
       {!showCustMgr && (
         <>
-          <div style={{ background: '#111', borderBottom: '1px solid rgba(255,255,255,0.06)', position: 'sticky', top: 0, zIndex: 100, overflowX: 'auto' }}>
+          <div style={{ background: '#000', borderBottom: '1px solid rgba(255,255,255,0.08)', position: 'sticky', top: 0, zIndex: 100, overflowX: 'auto' }}>
             <div style={{ maxWidth: 1280, margin: '0 auto', display: 'flex', padding: '0 16px' }}>
               {NAV_ITEMS.map((n) => (
                 <div key={n.id} className={`nav-item${activeNav === n.id ? ' active' : ''}`} onClick={() => { setActiveNav(n.id); setSelectedShirtType(null) }}>
                   {n.label}
-                  {n.badge && <span style={{ display: 'inline-block', background: '#c00', color: '#fff', fontSize: 9, padding: '1px 6px', borderRadius: 10, fontWeight: 700, marginLeft: 6, verticalAlign: 'middle' }}>{n.badge}</span>}
+                  {n.badge && <span style={{ display: 'inline-block', background: '#D80000', color: '#fff', fontSize: 9, padding: '1px 6px', borderRadius: 10, fontWeight: 700, marginLeft: 6, verticalAlign: 'middle' }}>{n.badge}</span>}
                 </div>
               ))}
             </div>
@@ -258,9 +258,9 @@ export default function CatalogPage() {
           {/* Filter bar ประเภทเสื้อ — แสดงเฉพาะ tab แบบเสื้อใหม่ */}
 
           {adminUser && (
-            <div style={{ background: 'rgba(200,0,0,0.07)', borderBottom: '1px solid rgba(200,0,0,0.18)', padding: '9px 20px' }}>
+            <div style={{ background: 'rgba(216,0,0,0.07)', borderBottom: '1px solid rgba(216,0,0,0.18)', padding: '9px 20px' }}>
               <div style={{ maxWidth: 1280, margin: '0 auto', display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
-                <span style={{ fontSize: 11, color: '#ff6060', fontWeight: 700 }}>⚙ Admin Mode — บันทึกสู่ Supabase อัตโนมัติ</span>
+                <span style={{ fontSize: 11, color: '#D80000', fontWeight: 700 }}>⚙ Admin Mode — บันทึกสู่ Supabase อัตโนมัติ</span>
                 {activeNav === 'new' && <button className="btn-red sm" onClick={() => setShowAdd(true)}>+ เพิ่มแบบเสื้อใหม่</button>}
                 {activeNav === 'collar' && <button className="btn-red sm" onClick={() => setShowAdd(true)}>+ เพิ่มคอเสื้อ</button>}
                 {activeNav === 'promotion' && <button className="btn-red sm" onClick={() => setShowAdd(true)}>+ เพิ่มโปรโมชั่น</button>}
@@ -268,16 +268,16 @@ export default function CatalogPage() {
                 {activeNav === 'fabric' && <button className="btn-red sm" onClick={() => setShowAdd(true)}>+ เพิ่มเนื้อผ้า</button>}
                 {activeNav === 'photo' && <button className="btn-red sm" onClick={() => setShowAdd(true)}>+ เพิ่มรูปภาพ</button>}
                 {activeNav === 'all' && <button className="btn-red sm" onClick={() => setShowAdd(true)}>+ เพิ่มสินค้าใหม่</button>}
-                <button className="btn-outline sm" onClick={() => setShowSettings(true)}>จัดการประเภท</button>
-                <button className="btn-outline sm" onClick={() => setShowContactAdmin(true)}>📞 ช่องทางติดต่อ</button>
-                <button className="btn-outline sm" onClick={() => setShowShopAdmin(true)}>🏪 หน้าต้อนรับ</button>
+                <button className="btn-black sm" onClick={() => setShowSettings(true)}>จัดการประเภท</button>
+                <button className="btn-black sm" onClick={() => setShowContactAdmin(true)}>📞 ช่องทางติดต่อ</button>
+                <button className="btn-black sm" onClick={() => setShowShopAdmin(true)}>🏪 หน้าต้อนรับ</button>
                 
-                <a href={`/export?admin=${encodeURIComponent(adminUser || '')}`} style={{ background: 'transparent', color: '#f5f5f5', border: '1px solid rgba(255,255,255,0.22)', padding: '5px 12px', borderRadius: 5, fontSize: 12, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 5, transition: 'all .18s' }}
-                  onMouseOver={e => { (e.currentTarget as HTMLAnchorElement).style.borderColor='#c00'; (e.currentTarget as HTMLAnchorElement).style.color='#c00' }}
-                  onMouseOut={e => { (e.currentTarget as HTMLAnchorElement).style.borderColor='rgba(255,255,255,0.22)'; (e.currentTarget as HTMLAnchorElement).style.color='#f5f5f5' }}>
+                <a href={`/export?admin=${encodeURIComponent(adminUser || '')}`} style={{ background: '#111', color: '#fff', border: '1px solid #333', padding: '5px 12px', borderRadius: 5, fontSize: 12, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 5, transition: 'background .18s' }}
+                  onMouseOver={e => { (e.currentTarget as HTMLAnchorElement).style.background='#222' }}
+                  onMouseOut={e => { (e.currentTarget as HTMLAnchorElement).style.background='#111' }}>
                   📥 Export ภาพ
                 </a>
-                <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.22)', marginLeft: 'auto' }}>
+                <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.5)', marginLeft: 'auto' }}>
                   ทั้งหมด {shirts.length} | แสดง {filtered.length} รายการ
                 </span>
               </div>
@@ -286,7 +286,7 @@ export default function CatalogPage() {
 
           <div style={{ maxWidth: 1280, margin: '0 auto', padding: '28px 20px' }}>
             {canDrag && (
-              <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', marginBottom: 14, display: 'flex', alignItems: 'center', gap: 6 }}>
+              <div style={{ fontSize: 11, color: '#888', marginBottom: 14, display: 'flex', alignItems: 'center', gap: 6 }}>
                 <span style={{ fontSize: 14 }}>☰</span> กดค้างที่การ์ดแล้วลากเพื่อเรียงลำดับ — บันทึกอัตโนมัติ
               </div>
             )}
@@ -323,7 +323,7 @@ export default function CatalogPage() {
                     <div style={{ fontSize: 10, color: '#999', letterSpacing: 1, fontWeight: 700, marginBottom: 6, paddingLeft: 4 }}>กรองประเภทเสื้อ</div>
                     <button
                       onClick={() => setSelectedShirtType(null)}
-                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 6, padding: '6px 10px', borderRadius: 7, border: 'none', background: selectedShirtType === null ? '#c00' : '#f5f5f5', color: selectedShirtType === null ? '#fff' : '#333', fontSize: 12, cursor: 'pointer', textAlign: 'left', width: '100%', fontWeight: selectedShirtType === null ? 700 : 500, transition: 'all 0.15s', marginBottom: 2 }}
+                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 6, padding: '6px 10px', borderRadius: 7, border: 'none', background: selectedShirtType === null ? '#D80000' : '#f5f5f5', color: selectedShirtType === null ? '#fff' : '#333', fontSize: 12, cursor: 'pointer', textAlign: 'left', width: '100%', fontWeight: selectedShirtType === null ? 700 : 500, transition: 'all 0.15s', marginBottom: 2 }}
                     >
                       <span><span className="sidebar-emoji">🗂️ </span>ทั้งหมด</span>
                       <span style={{ background: selectedShirtType === null ? 'rgba(255,255,255,0.25)' : '#e0e0e0', color: selectedShirtType === null ? '#fff' : '#555', borderRadius: 999, padding: '1px 6px', fontSize: 10, fontWeight: 700 }}>
@@ -338,7 +338,7 @@ export default function CatalogPage() {
                         <button
                           key={type.id}
                           onClick={() => setSelectedShirtType(isActive ? null : type.slug)}
-                          style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 6, padding: '6px 10px', borderRadius: 7, border: 'none', background: isActive ? '#c00' : '#f5f5f5', color: isActive ? '#fff' : '#333', fontSize: 12, cursor: 'pointer', textAlign: 'left', width: '100%', fontWeight: isActive ? 700 : 400, transition: 'all 0.15s', marginBottom: 2 }}
+                          style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 6, padding: '6px 10px', borderRadius: 7, border: 'none', background: isActive ? '#D80000' : '#f5f5f5', color: isActive ? '#fff' : '#333', fontSize: 12, cursor: 'pointer', textAlign: 'left', width: '100%', fontWeight: isActive ? 700 : 400, transition: 'all 0.15s', marginBottom: 2 }}
                           onMouseEnter={e => { if (!isActive) (e.currentTarget as HTMLButtonElement).style.background = '#ebebeb' }}
                           onMouseLeave={e => { if (!isActive) (e.currentTarget as HTMLButtonElement).style.background = '#f5f5f5' }}
                         >
@@ -361,7 +361,7 @@ export default function CatalogPage() {
             {filtered.length === 0 ? (
               <div style={{ textAlign: 'center', padding: '70px 20px' }}>
                 <div style={{ fontSize: 50, marginBottom: 16, opacity: .2 }}>👕</div>
-                <div style={{ color: 'rgba(255,255,255,0.22)', fontSize: 14, marginBottom: adminUser ? 18 : 0 }}>ยังไม่มีสินค้าในหมวดนี้</div>
+                <div style={{ color: '#bbb', fontSize: 14, marginBottom: adminUser ? 18 : 0 }}>ยังไม่มีสินค้าในหมวดนี้</div>
                 {adminUser && (
                   <button className="btn-red" style={{ padding: '10px 30px' }} onClick={() => setShowAdd(true)}>
                     {activeNav === 'new' ? '+ เพิ่มแบบเสื้อแรก' : activeNav === 'collar' ? '+ เพิ่มคอเสื้อ' : activeNav === 'promotion' ? '+ เพิ่มโปรโมชั่น' : activeNav === 'other' ? '+ เพิ่มสินค้าแรก' : activeNav === 'fabric' ? '+ เพิ่มเนื้อผ้า' : activeNav === 'photo' ? '+ เพิ่มรูปภาพ' : '+ เพิ่มสินค้าใหม่'}
@@ -418,7 +418,7 @@ export default function CatalogPage() {
         </>
       )}
 
-      <div style={{ borderTop: '1px solid rgba(255,255,255,0.05)', padding: '16px 24px', textAlign: 'center', fontSize: 10, color: 'rgba(255,255,255,0.13)' }}>
+      <div style={{ borderTop: '1px solid #e8e8e8', padding: '16px 24px', textAlign: 'center', fontSize: 10, color: '#ccc' }}>
         Shirt Catalog © 2025 — Powered by Supabase + Vercel
       </div>
 
@@ -483,14 +483,14 @@ export default function CatalogPage() {
 /* ── Loading ── */
 function LoadingScreen({ shopSettings }: { shopSettings?: { shop_name: string; logo_url: string | null } }) {
   return (
-    <div style={{ minHeight: '100vh', background: '#0a0a0a', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 20 }}>
+    <div style={{ minHeight: '100vh', background: '#ffffff', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 20 }}>
       {shopSettings?.logo_url
         ? <img src={shopSettings.logo_url} alt='logo' style={{ width: 50, height: 50, borderRadius: 12, objectFit: 'cover' }} />
         : <div style={{ width: 50, height: 50, background: 'linear-gradient(135deg,#c00,#800)', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 24, color: '#fff' }}>S</div>
       }
-      <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: 13 }}>กำลังโหลดข้อมูลจาก Supabase...</div>
-      <div style={{ width: 160, height: 3, background: '#1c1c1c', borderRadius: 2, overflow: 'hidden' }}>
-        <div style={{ height: '100%', background: '#c00', animation: 'loading 1.2s ease-in-out infinite', borderRadius: 2 }} />
+      <div style={{ color: '#888', fontSize: 13 }}>กำลังโหลดข้อมูลจาก Supabase...</div>
+      <div style={{ width: 160, height: 3, background: '#e8e8e8', borderRadius: 2, overflow: 'hidden' }}>
+        <div style={{ height: '100%', background: '#D80000', animation: 'loading 1.2s ease-in-out infinite', borderRadius: 2 }} />
       </div>
     </div>
   )
@@ -546,7 +546,7 @@ function BannerSection({ banners, setBanners, isAdmin, notify }: {
   // ถ้ากำลัง preview รูปใหม่
   if (preview) {
     return (
-      <div style={{ background: '#0d0d0d', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+      <div style={{ background: '#f5f5f5', borderBottom: '1px solid #e0e0e0' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto', padding: 20 }}>
           {/* Preview Banner */}
           <div style={{ position: 'relative', borderRadius: 12, overflow: 'hidden', width: '100%', paddingTop: 'clamp(120px, 28vw, 380px)', height: 0, marginBottom: 12 }}>
@@ -562,53 +562,53 @@ function BannerSection({ banners, setBanners, isAdmin, notify }: {
             />
             <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right,rgba(0,0,0,0.3),transparent)' }} />
             {/* Badge */}
-            <div style={{ position: 'absolute', top: 12, left: 12, background: 'rgba(200,0,0,0.85)', color: '#fff', fontSize: 11, fontWeight: 700, padding: '4px 10px', borderRadius: 6 }}>
+            <div style={{ position: 'absolute', top: 12, left: 12, background: 'rgba(216,0,0,0.85)', color: '#fff', fontSize: 11, fontWeight: 700, padding: '4px 10px', borderRadius: 6 }}>
               PREVIEW — ยังไม่บันทึก
             </div>
           </div>
 
           {/* Position Controls */}
-          <div style={{ background: '#111', borderRadius: 10, padding: 16, border: '1px solid rgba(255,255,255,0.08)', marginBottom: 12 }}>
-            <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', marginBottom: 12, fontWeight: 600 }}>📐 ปรับตำแหน่งรูปภาพ</div>
+          <div style={{ background: '#f8f8f8', borderRadius: 10, padding: 16, border: '1px solid #e0e0e0', marginBottom: 12 }}>
+            <div style={{ fontSize: 12, color: '#666', marginBottom: 12, fontWeight: 600 }}>📐 ปรับตำแหน่งรูปภาพ</div>
 
             {/* Y Axis (ขึ้น-ลง) */}
             <div style={{ marginBottom: 12 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: 'rgba(255,255,255,0.4)', marginBottom: 6 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: '#888', marginBottom: 6 }}>
                 <span>↕️ ขึ้น-ลง</span>
                 <span>{preview.posY}%</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <button onClick={() => setPreview(p => p && { ...p, posY: Math.max(0, p.posY - 5) })}
-                  style={{ background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', width: 32, height: 32, borderRadius: 6, cursor: 'pointer', fontSize: 16, flexShrink: 0 }}>↑</button>
+                  style={{ background: '#f0f0f0', border: '1px solid #ccc', color: '#333', width: 32, height: 32, borderRadius: 6, cursor: 'pointer', fontSize: 16, flexShrink: 0 }}>↑</button>
                 <input type="range" min={0} max={100} value={preview.posY}
                   onChange={e => setPreview(p => p && { ...p, posY: Number(e.target.value) })}
-                  style={{ flex: 1, accentColor: '#c00' }} />
+                  style={{ flex: 1, accentColor: '#D80000' }} />
                 <button onClick={() => setPreview(p => p && { ...p, posY: Math.min(100, p.posY + 5) })}
-                  style={{ background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', width: 32, height: 32, borderRadius: 6, cursor: 'pointer', fontSize: 16, flexShrink: 0 }}>↓</button>
+                  style={{ background: '#f0f0f0', border: '1px solid #ccc', color: '#333', width: 32, height: 32, borderRadius: 6, cursor: 'pointer', fontSize: 16, flexShrink: 0 }}>↓</button>
               </div>
             </div>
 
             {/* X Axis (ซ้าย-ขวา) */}
             <div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: 'rgba(255,255,255,0.4)', marginBottom: 6 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: '#888', marginBottom: 6 }}>
                 <span>↔️ ซ้าย-ขวา</span>
                 <span>{preview.posX}%</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <button onClick={() => setPreview(p => p && { ...p, posX: Math.max(0, p.posX - 5) })}
-                  style={{ background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', width: 32, height: 32, borderRadius: 6, cursor: 'pointer', fontSize: 16, flexShrink: 0 }}>←</button>
+                  style={{ background: '#f0f0f0', border: '1px solid #ccc', color: '#333', width: 32, height: 32, borderRadius: 6, cursor: 'pointer', fontSize: 16, flexShrink: 0 }}>←</button>
                 <input type="range" min={0} max={100} value={preview.posX}
                   onChange={e => setPreview(p => p && { ...p, posX: Number(e.target.value) })}
-                  style={{ flex: 1, accentColor: '#c00' }} />
+                  style={{ flex: 1, accentColor: '#D80000' }} />
                 <button onClick={() => setPreview(p => p && { ...p, posX: Math.min(100, p.posX + 5) })}
-                  style={{ background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', width: 32, height: 32, borderRadius: 6, cursor: 'pointer', fontSize: 16, flexShrink: 0 }}>→</button>
+                  style={{ background: '#f0f0f0', border: '1px solid #ccc', color: '#333', width: 32, height: 32, borderRadius: 6, cursor: 'pointer', fontSize: 16, flexShrink: 0 }}>→</button>
               </div>
             </div>
 
             {/* Reset */}
             <div style={{ marginTop: 10, textAlign: 'right' }}>
               <button onClick={() => setPreview(p => p && { ...p, posX: 50, posY: 50 })}
-                style={{ background: 'transparent', border: 'none', color: 'rgba(255,255,255,0.35)', fontSize: 11, cursor: 'pointer', fontFamily: 'inherit' }}>
+                style={{ background: 'transparent', border: 'none', color: '#aaa', fontSize: 11, cursor: 'pointer', fontFamily: 'inherit' }}>
                 ↺ รีเซ็ตกลาง
               </button>
             </div>
@@ -617,11 +617,11 @@ function BannerSection({ banners, setBanners, isAdmin, notify }: {
           {/* Action Buttons */}
           <div style={{ display: 'flex', gap: 10 }}>
             <button onClick={() => setPreview(null)}
-              style={{ flex: 1, background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', color: 'rgba(255,255,255,0.6)', padding: '11px', borderRadius: 8, cursor: 'pointer', fontFamily: 'inherit', fontWeight: 600, fontSize: 14 }}>
+              style={{ flex: 1, background: '#f5f5f5', border: '1px solid #ccc', color: '#444', padding: '11px', borderRadius: 8, cursor: 'pointer', fontFamily: 'inherit', fontWeight: 600, fontSize: 14 }}>
               ✕ ยกเลิก
             </button>
             <button onClick={handleSave} disabled={saving}
-              style={{ flex: 2, background: saving ? '#555' : '#c00', color: '#fff', border: 'none', padding: '11px', borderRadius: 8, cursor: saving ? 'wait' : 'pointer', fontFamily: 'inherit', fontWeight: 700, fontSize: 14 }}>
+              style={{ flex: 2, background: saving ? '#999' : '#D80000', color: '#fff', border: 'none', padding: '11px', borderRadius: 8, cursor: saving ? 'wait' : 'pointer', fontFamily: 'inherit', fontWeight: 700, fontSize: 14 }}>
               {saving ? '⏳ กำลังบันทึก...' : '💾 บันทึก Banner'}
             </button>
           </div>
@@ -631,7 +631,7 @@ function BannerSection({ banners, setBanners, isAdmin, notify }: {
   }
 
   return (
-    <div style={{ background: '#0d0d0d', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+    <div style={{ background: '#f5f5f5', borderBottom: '1px solid #e0e0e0' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: 20 }}>
         {banners.length > 0 ? (
           <div style={{ position: 'relative', borderRadius: 12, overflow: 'hidden', width: '100%', paddingTop: 'clamp(120px, 28vw, 380px)', height: 0 }}>
@@ -642,7 +642,7 @@ function BannerSection({ banners, setBanners, isAdmin, notify }: {
                 <button onClick={() => setCur((c) => (c - 1 + banners.length) % banners.length)} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', background: 'rgba(0,0,0,0.55)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', width: 32, height: 32, borderRadius: '50%', cursor: 'pointer', fontSize: 15 }}>‹</button>
                 <button onClick={() => setCur((c) => (c + 1) % banners.length)} style={{ position: 'absolute', right: isAdmin ? 130 : 12, top: '50%', transform: 'translateY(-50%)', background: 'rgba(0,0,0,0.55)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', width: 32, height: 32, borderRadius: '50%', cursor: 'pointer', fontSize: 15 }}>›</button>
                 <div style={{ position: 'absolute', bottom: 12, left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: 6 }}>
-                  {banners.map((_, i) => <div key={i} onClick={() => setCur(i)} style={{ width: i === idx ? 22 : 7, height: 7, borderRadius: 4, background: i === idx ? '#c00' : 'rgba(255,255,255,0.35)', cursor: 'pointer', transition: 'all .3s' }} />)}
+                  {banners.map((_, i) => <div key={i} onClick={() => setCur(i)} style={{ width: i === idx ? 22 : 7, height: 7, borderRadius: 4, background: i === idx ? '#D80000' : 'rgba(255,255,255,0.45)', cursor: 'pointer', transition: 'all .3s' }} />)}
                 </div>
               </>
             )}
@@ -665,11 +665,11 @@ function BannerSection({ banners, setBanners, isAdmin, notify }: {
             onDrop={(e) => { e.preventDefault(); setOv(false); if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]) }}
             onClick={() => ref.current?.click()}>
             <div style={{ fontSize: 32 }}>🖼</div>
-            <div style={{ color: '#c00', fontWeight: 700, fontSize: 14 }}>ลาก-วางรูป Banner หรือคลิกเลือกไฟล์</div>
-            <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)' }}>JPG · PNG · WEBP — ปรับตำแหน่งก่อนบันทึกได้</div>
+            <div style={{ color: '#D80000', fontWeight: 700, fontSize: 14 }}>ลาก-วางรูป Banner หรือคลิกเลือกไฟล์</div>
+            <div style={{ fontSize: 11, color: '#aaa' }}>JPG · PNG · WEBP — ปรับตำแหน่งก่อนบันทึกได้</div>
           </div>
         ) : (
-          <div style={{ height: 60, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.1)', fontSize: 12 }}>ยังไม่มี Banner</div>
+          <div style={{ height: 60, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ccc', fontSize: 12 }}>ยังไม่มี Banner</div>
         )}
         <input ref={ref} type="file" accept="image/*" style={{ display: 'none' }} onChange={(e) => { if (e.target.files?.[0]) handleFile(e.target.files[0]); e.target.value = '' }} />
       </div>
@@ -722,7 +722,7 @@ function ShirtCard({ shirt, isAdmin, canDrag, isDragging, isDragOver, onDragStar
       }}
     >
       {canDrag && (
-        <div style={{ position: 'absolute', top: 8, right: 8, zIndex: 10, color: 'rgba(255,255,255,0.45)', fontSize: 16, lineHeight: 1, pointerEvents: 'none', userSelect: 'none' }}>⠿</div>
+        <div style={{ position: 'absolute', top: 8, right: 8, zIndex: 10, color: 'rgba(0,0,0,0.25)', fontSize: 16, lineHeight: 1, pointerEvents: 'none', userSelect: 'none' }}>⠿</div>
       )}
       <div style={{ aspectRatio: '1', background: '#1a1a1a', position: 'relative', overflow: 'hidden', cursor: shirt.image_url ? 'zoom-in' : 'default' }}
         onClick={() => shirt.image_url && onImageClick?.(shirt.image_url)}>
@@ -730,39 +730,39 @@ function ShirtCard({ shirt, isAdmin, canDrag, isDragging, isDragOver, onDragStar
           ? <img src={shirt.image_url} alt={shirt.name} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.2s' }}
               onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.04)')}
               onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')} />
-          : <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.08)', fontSize: 44 }}>👕</div>
+          : <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(0,0,0,0.08)', fontSize: 44 }}>👕</div>
         }
         {shirt.image_url && (
-          <div style={{ position: 'absolute', bottom: 6, right: 6, background: 'rgba(0,0,0,0.5)', borderRadius: 6, padding: '3px 7px', fontSize: 11, color: 'rgba(255,255,255,0.7)', pointerEvents: 'none' }}>🔍</div>
+          <div style={{ position: 'absolute', bottom: 6, right: 6, background: 'rgba(0,0,0,0.4)', borderRadius: 6, padding: '3px 7px', fontSize: 11, color: 'rgba(255,255,255,0.9)', pointerEvents: 'none' }}>🔍</div>
         )}
         <div style={{ position: 'absolute', top: 8, left: 8, display: 'flex', flexDirection: 'column', gap: 4 }}>
-          {shirt.category === 'new' && <span style={{ background: '#c00', color: '#fff', fontSize: 9, padding: '2px 7px', borderRadius: 10, fontWeight: 700 }}>NEW</span>}
+          {shirt.category === 'new' && <span style={{ background: '#D80000', color: '#fff', fontSize: 9, padding: '2px 7px', borderRadius: 10, fontWeight: 700 }}>NEW</span>}
           {shirt.is_promo && <span style={{ background: '#e07800', color: '#fff', fontSize: 9, padding: '2px 7px', borderRadius: 10, fontWeight: 700 }}>โปร</span>}
         </div>
       </div>
       <div style={{ padding: '13px 14px 12px' }}>
         {shirt.category === 'fabric' ? (
           <>
-            <div style={{ background: '#c00', borderRadius: 6, padding: '5px 10px', marginBottom: 8, display: 'inline-block' }}>
+            <div style={{ background: '#D80000', borderRadius: 6, padding: '5px 10px', marginBottom: 8, display: 'inline-block' }}>
               <span style={{ fontWeight: 700, fontSize: 14, color: '#fff', lineHeight: 1.3 }}>{shirt.name || 'ไม่มีชื่อ'}</span>
             </div>
-            {shirt.collar_type && <div style={{ fontSize: 11, color: 'rgba(0,0,0,0.7)', background: '#111', borderRadius: 4, padding: '4px 8px', marginBottom: 4 }}><span style={{ color: '#ff4444', fontWeight: 700 }}>คุณสมบัติผ้า:</span> <span style={{ color: 'rgba(255,255,255,0.6)' }}>{shirt.collar_type}</span></div>}
-            {shirt.product_type && <div style={{ fontSize: 11, background: '#111', borderRadius: 4, padding: '4px 8px', marginBottom: 8 }}><span style={{ color: '#ff4444', fontWeight: 700 }}>ประเภทผ้า:</span> <span style={{ color: 'rgba(255,255,255,0.6)' }}>{shirt.product_type}</span></div>}
-            <div style={{ fontWeight: 700, fontSize: 15, color: Number(shirt.price) > 0 ? '#ff4444' : 'rgba(255,255,255,0.4)' }}>{Number(shirt.price) > 0 ? `+ ${Number(shirt.price).toLocaleString()}.- บาท/ตัว` : 'ไม่บวกเพิ่ม'}</div>
+            {shirt.collar_type && <div style={{ fontSize: 11, color: '#444', background: '#f5f5f5', borderRadius: 4, padding: '4px 8px', marginBottom: 4 }}><span style={{ color: '#D80000', fontWeight: 700 }}>คุณสมบัติผ้า:</span> <span style={{ color: '#555' }}>{shirt.collar_type}</span></div>}
+            {shirt.product_type && <div style={{ fontSize: 11, background: '#f5f5f5', borderRadius: 4, padding: '4px 8px', marginBottom: 8 }}><span style={{ color: '#D80000', fontWeight: 700 }}>ประเภทผ้า:</span> <span style={{ color: '#555' }}>{shirt.product_type}</span></div>}
+            <div style={{ fontWeight: 700, fontSize: 15, color: Number(shirt.price) > 0 ? '#D80000' : '#bbb' }}>{Number(shirt.price) > 0 ? `+ ${Number(shirt.price).toLocaleString()}.- บาท/ตัว` : 'ไม่บวกเพิ่ม'}</div>
           </>
         ) : (
           <>
             <div style={{ fontWeight: 600, fontSize: 14, marginBottom: 4, color: '#fff', lineHeight: 1.3 }}>{shirt.name || 'ไม่มีชื่อ'}</div>
-            {shirt.collar_type && <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.36)', marginBottom: 2 }}>คอ: {shirt.collar_type}</div>}
-            {shirt.product_type && <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.36)', marginBottom: 4 }}>ประเภท: {shirt.product_type}</div>}
+            {shirt.collar_type && <div style={{ fontSize: 11, color: '#888', marginBottom: 2 }}>คอ: {shirt.collar_type}</div>}
+            {shirt.product_type && <div style={{ fontSize: 11, color: '#888', marginBottom: 4 }}>ประเภท: {shirt.product_type}</div>}
             {(shirt as any).shirt_type && (shirt as any).shirt_type_name && (
               <div style={{ marginBottom: 8 }}>
-                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 3, background: 'rgba(200,0,0,0.1)', border: '1px solid rgba(200,0,0,0.3)', color: '#ff8080', borderRadius: 4, padding: '1px 8px', fontSize: 11, fontWeight: 500 }}>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 3, background: 'rgba(216,0,0,0.1)', border: '1px solid rgba(216,0,0,0.3)', color: '#ff8080', borderRadius: 4, padding: '1px 8px', fontSize: 11, fontWeight: 500 }}>
                   {(shirt as any).shirt_type_icon || '👕'} {(shirt as any).shirt_type_name}
                 </span>
               </div>
             )}
-            <div style={{ fontWeight: 700, fontSize: 16, color: Number(shirt.price) > 0 ? '#ff4444' : 'rgba(255,255,255,0.3)' }}>{Number(shirt.price) > 0 ? `${Number(shirt.price).toLocaleString()}.- บาท/ตัว` : '—'}</div>
+            <div style={{ fontWeight: 700, fontSize: 16, color: Number(shirt.price) > 0 ? '#D80000' : '#bbb' }}>{Number(shirt.price) > 0 ? `${Number(shirt.price).toLocaleString()}.- บาท/ตัว` : '—'}</div>
           </>
         )}
         {showActionBtns && (
@@ -794,10 +794,10 @@ function PhotoCard({ shirt, isAdmin, onEdit, onDelete, onImageClick }: {
       {shirt.image_url ? (
         <div style={{ position: 'relative', cursor: 'zoom-in' }} onClick={() => onImageClick?.(shirt.image_url!)}>
           <img src={shirt.image_url} alt={shirt.name || ''} style={{ width: '100%', display: 'block', borderRadius: '8px 8px 0 0' }} />
-          <div style={{ position: 'absolute', bottom: 6, right: 6, background: 'rgba(0,0,0,0.5)', borderRadius: 6, padding: '3px 7px', fontSize: 11, color: 'rgba(255,255,255,0.7)' }}>🔍</div>
+          <div style={{ position: 'absolute', bottom: 6, right: 6, background: 'rgba(0,0,0,0.4)', borderRadius: 6, padding: '3px 7px', fontSize: 11, color: 'rgba(255,255,255,0.9)' }}>🔍</div>
         </div>
       ) : (
-        <div style={{ width: '100%', aspectRatio: '4/3', background: '#1a1a1a', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.08)', fontSize: 44, borderRadius: '8px 8px 0 0' }}>🖼</div>
+        <div style={{ width: '100%', aspectRatio: '4/3', background: '#1a1a1a', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(0,0,0,0.08)', fontSize: 44, borderRadius: '8px 8px 0 0' }}>🖼</div>
       )}
       {isAdmin && (
         <div style={{ display: 'flex', gap: 5, padding: '8px 10px' }}>
@@ -852,8 +852,8 @@ function ShirtModal({ initial, collars, prodTypes, fabricTypes, shirtTypes, cate
             onDrop={(e) => { e.preventDefault(); setOv(false); if (e.dataTransfer.files[0]) loadImg(e.dataTransfer.files[0]) }}
             onClick={() => ref.current?.click()}>
             <div style={{ fontSize: 28 }}>📷</div>
-            <div style={{ color: '#c00', fontWeight: 700, fontSize: 13 }}>ลาก-วางรูปภาพ หรือคลิกเลือก</div>
-            <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)' }}>JPG · PNG · WEBP — อัปโหลดสู่ Supabase Storage</div>
+            <div style={{ color: '#D80000', fontWeight: 700, fontSize: 13 }}>ลาก-วางรูปภาพ หรือคลิกเลือก</div>
+            <div style={{ fontSize: 11, color: '#aaa' }}>JPG · PNG · WEBP — อัปโหลดสู่ Supabase Storage</div>
           </div>
         )}
         <input ref={ref} type="file" accept="image/*" style={{ display: 'none' }} onChange={(e) => { if (e.target.files?.[0]) loadImg(e.target.files[0]); e.target.value = '' }} />
@@ -865,7 +865,7 @@ function ShirtModal({ initial, collars, prodTypes, fabricTypes, shirtTypes, cate
             <div><div className="section-label">เนื้อผ้า +บวกเพิ่ม ตัวละ</div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <input className="input-d" type="number" value={f.price} onChange={(e) => set('price', e.target.value)} placeholder="0" style={{ flex: 1 }} />
-                <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.35)', whiteSpace: 'nowrap' }}>บาท/ตัว</span>
+                <span style={{ fontSize: 13, color: '#aaa', whiteSpace: 'nowrap' }}>บาท/ตัว</span>
               </div>
             </div>
             <div><div className="section-label">ประเภทเนื้อผ้า</div>
@@ -896,13 +896,13 @@ function ShirtModal({ initial, collars, prodTypes, fabricTypes, shirtTypes, cate
             <div><div className="section-label">ราคา (THB)</div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <input className="input-d" type="number" value={f.price} onChange={(e) => set('price', e.target.value)} placeholder="0" style={{ flex: 1 }} />
-                <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.35)', whiteSpace: 'nowrap' }}>THB.-</span>
+                <span style={{ fontSize: 13, color: '#aaa', whiteSpace: 'nowrap' }}>THB.-</span>
               </div>
             </div>
           </>)}
           {/* ── photo / promotion: รูปอย่างเดียว ── */}
           {(f.category === 'photo' || f.category === 'promotion') && (
-            <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)', textAlign: 'center', padding: '8px 0' }}>อัปโหลดรูปภาพด้านบนเพื่อบันทึก</div>
+            <div style={{ fontSize: 12, color: '#aaa', textAlign: 'center', padding: '8px 0' }}>อัปโหลดรูปภาพด้านบนเพื่อบันทึก</div>
           )}
           {/* ── new / other / all ── */}
           {(f.category === 'new' || f.category === 'other') && (<>
@@ -922,7 +922,7 @@ function ShirtModal({ initial, collars, prodTypes, fabricTypes, shirtTypes, cate
             <div><div className="section-label">ราคา (THB)</div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <input className="input-d" type="number" value={f.price} onChange={(e) => set('price', e.target.value)} placeholder="0" style={{ flex: 1 }} />
-                <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.35)', whiteSpace: 'nowrap' }}>THB.-</span>
+                <span style={{ fontSize: 13, color: '#aaa', whiteSpace: 'nowrap' }}>THB.-</span>
               </div>
             </div>
             <div><div className="section-label">หมวดหมู่</div>
@@ -947,7 +947,7 @@ function ShirtModal({ initial, collars, prodTypes, fabricTypes, shirtTypes, cate
                 {f.shirt_type && (
                   <div style={{ marginTop: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
                     <span style={{ fontSize: 11, color: '#555' }}>Preview:</span>
-                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 3, background: 'rgba(200,0,0,0.1)', border: '1px solid rgba(200,0,0,0.3)', color: '#ff8080', borderRadius: 4, padding: '1px 8px', fontSize: 11 }}>
+                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 3, background: 'rgba(216,0,0,0.1)', border: '1px solid rgba(216,0,0,0.3)', color: '#ff8080', borderRadius: 4, padding: '1px 8px', fontSize: 11 }}>
                       {shirtTypes.find(t => t.slug === f.shirt_type)?.icon} {shirtTypes.find(t => t.slug === f.shirt_type)?.name}
                     </span>
                   </div>
@@ -994,7 +994,7 @@ function SettingsModal({ collars, setCollars, prodTypes, setProdTypes, fabricTyp
           <div style={{ fontWeight: 700, fontSize: 16 }}>⚙ จัดการประเภทสินค้า</div>
           <button className="btn-outline sm" onClick={onClose}>✕</button>
         </div>
-        <div style={{ display: 'flex', gap: 4, marginBottom: 16, borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: 12, flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: 4, marginBottom: 16, borderBottom: '1px solid #e8e8e8', paddingBottom: 12, flexWrap: 'wrap' }}>
           {TABS.map(([id, lbl]) => (
             <div key={id} className={`nav-item${tab === id ? ' active' : ''}`} style={{ padding: '5px 12px', borderRadius: 5, fontSize: 12 }} onClick={() => setTab(id as any)}>{lbl}</div>
           ))}
@@ -1076,7 +1076,7 @@ function CollarPriceList({ collars, setCollars, notify }: {
   }
   return (
     <div>
-      <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', marginBottom: 10 }}>กำหนดราคาต่อตัวสำหรับแต่ละประเภทคอเสื้อ</div>
+      <div style={{ fontSize: 11, color: '#888', marginBottom: 10 }}>กำหนดราคาต่อตัวสำหรับแต่ละประเภทคอเสื้อ</div>
       <div style={{ maxHeight: 340, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 5 }}>
         {collars.map((col) => (
           <div key={col.id} style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#1a1a1a', padding: '7px 12px', borderRadius: 5 }}>
@@ -1084,7 +1084,7 @@ function CollarPriceList({ collars, setCollars, notify }: {
             <input className="input-d" type="number" value={editing[col.id] ?? col.price ?? 0}
               onChange={(e) => setEditing((prev) => ({ ...prev, [col.id]: e.target.value }))}
               style={{ width: 90, textAlign: 'right' }} />
-            <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', whiteSpace: 'nowrap' }}>THB</span>
+            <span style={{ fontSize: 11, color: '#aaa', whiteSpace: 'nowrap' }}>THB</span>
             <button className="btn-red sm" onClick={() => save(col)}>บันทึก</button>
           </div>
         ))}
@@ -1130,7 +1130,7 @@ function PromotionList({ promotions, setPromotions, notify }: {
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
-        <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)' }}>โปรโมชั่นที่ active จะนำมาคำนวณราคา</div>
+        <div style={{ fontSize: 11, color: '#888' }}>โปรโมชั่นที่ active จะนำมาคำนวณราคา</div>
         <button className="btn-red sm" onClick={() => { setShowAdd(true); setEditId(null); setF(empty) }}>+ เพิ่ม</button>
       </div>
       {(showAdd || editId) && (
@@ -1170,14 +1170,14 @@ function PromotionList({ promotions, setPromotions, notify }: {
           <div key={p.id} style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#1a1a1a', padding: '8px 12px', borderRadius: 5, border: p.is_active ? '1px solid #c00' : '1px solid transparent' }}>
             <div style={{ flex: 1 }}>
               <div style={{ fontSize: 13, fontWeight: 600 }}>{p.name}</div>
-              <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>สั่ง {p.min_qty}+ ตัว · {TYPE_LABELS[p.type]}{p.type==='free'?` ${p.free_qty} ตัว`:p.type==='discount_qty'?` ${p.discount_qty} ตัว`:p.type==='discount_pct'?` ${p.discount_pct}%`:` ฿${p.discount_thb}`}</div>
+              <div style={{ fontSize: 11, color: '#888' }}>สั่ง {p.min_qty}+ ตัว · {TYPE_LABELS[p.type]}{p.type==='free'?` ${p.free_qty} ตัว`:p.type==='discount_qty'?` ${p.discount_qty} ตัว`:p.type==='discount_pct'?` ${p.discount_pct}%`:` ฿${p.discount_thb}`}</div>
             </div>
-            <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 10, background: p.is_active ? '#c00' : '#333', color: '#fff', cursor: 'pointer' }} onClick={() => toggleActive(p)}>{p.is_active ? 'เปิด' : 'ปิด'}</span>
+            <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 10, background: p.is_active ? '#D80000' : '#333', color: '#fff', cursor: 'pointer' }} onClick={() => toggleActive(p)}>{p.is_active ? 'เปิด' : 'ปิด'}</span>
             <button className="btn-outline sm" onClick={() => { setEditId(p.id); setShowAdd(false); setF({ name: p.name, is_active: p.is_active, min_qty: p.min_qty, type: p.type, free_qty: p.free_qty, discount_qty: p.discount_qty, discount_pct: p.discount_pct, discount_thb: p.discount_thb }) }}>แก้ไข</button>
             <button className="btn-ghost" onClick={() => del(p.id)}>ลบ</button>
           </div>
         ))}
-        {promotions.length === 0 && <div style={{ textAlign: 'center', color: 'rgba(255,255,255,0.2)', fontSize: 13, padding: 20 }}>ยังไม่มีโปรโมชั่น</div>}
+        {promotions.length === 0 && <div style={{ textAlign: 'center', color: '#ccc', fontSize: 13, padding: 20 }}>ยังไม่มีโปรโมชั่น</div>}
       </div>
     </div>
   )
@@ -1214,7 +1214,7 @@ function ShippingList({ shippingRules, setShippingRules, notify }: {
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
-        <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)' }}>ค่าขนส่ง 0 บาท = ไม่คิดค่าจัดส่ง</div>
+        <div style={{ fontSize: 11, color: '#888' }}>ค่าขนส่ง 0 บาท = ไม่คิดค่าจัดส่ง</div>
         <button className="btn-red sm" onClick={() => { setShowAdd(true); setEditId(null); setF(empty) }}>+ เพิ่ม</button>
       </div>
       {(showAdd || editId) && (
@@ -1244,7 +1244,7 @@ function ShippingList({ shippingRules, setShippingRules, notify }: {
           <div key={r.id} style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#1a1a1a', padding: '8px 12px', borderRadius: 5 }}>
             <div style={{ flex: 1 }}>
               <div style={{ fontSize: 13, fontWeight: 600 }}>{r.name}</div>
-              <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>{r.min_qty}{r.max_qty != null ? `–${r.max_qty}` : '+'} ตัว · ฿{Number(r.price).toLocaleString()}</div>
+              <div style={{ fontSize: 11, color: '#888' }}>{r.min_qty}{r.max_qty != null ? `–${r.max_qty}` : '+'} ตัว · ฿{Number(r.price).toLocaleString()}</div>
             </div>
             <button className="btn-outline sm" onClick={() => { setEditId(r.id); setShowAdd(false); setF({ name: r.name, min_qty: r.min_qty, max_qty: r.max_qty, price: r.price }) }}>แก้ไข</button>
             <button className="btn-ghost" onClick={() => del(r.id)}>ลบ</button>
@@ -1267,19 +1267,19 @@ function CustomerMgr({ customers, setCustomers, notify }: {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20, flexWrap: 'wrap', gap: 12 }}>
         <div>
           <div style={{ fontWeight: 700, fontSize: 18 }}>ข้อมูลสมาชิก</div>
-          <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', marginTop: 3 }}>Supabase Database · {customers.length} คน</div>
+          <div style={{ fontSize: 11, color: '#aaa', marginTop: 3 }}>Supabase Database · {customers.length} คน</div>
         </div>
         <input className="input-d" style={{ width: 260 }} placeholder="ค้นหาชื่อ / อีเมล / Facebook..." value={q} onChange={(e) => setQ(e.target.value)} />
       </div>
       {list.length === 0
-        ? <div style={{ textAlign: 'center', padding: 60, color: 'rgba(255,255,255,0.2)', fontSize: 13 }}>ไม่พบสมาชิก</div>
+        ? <div style={{ textAlign: 'center', padding: 60, color: '#ccc', fontSize: 13 }}>ไม่พบสมาชิก</div>
         : <div style={{ display: 'grid', gap: 10 }}>
           {list.map((c) => (
-            <div key={c.id} style={{ background: '#161616', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 8, padding: '14px 18px', display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
+            <div key={c.id} style={{ background: '#f8f8f8', border: '1px solid #e8e8e8', borderRadius: 8, padding: '14px 18px', display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
               <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'linear-gradient(135deg,#c00,#800)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 15, color: '#fff', flexShrink: 0 }}>{(c.name || '?')[0].toUpperCase()}</div>
               <div style={{ flex: 1, minWidth: 180 }}>
                 <div style={{ fontWeight: 600, fontSize: 14 }}>{c.name}</div>
-                <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', marginTop: 3, display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+                <div style={{ fontSize: 11, color: '#888', marginTop: 3, display: 'flex', gap: 12, flexWrap: 'wrap' }}>
                   {c.email && <span>📧 {c.email}</span>}
                   {c.phone && <span>📞 {c.phone}</span>}
                   {c.facebook && <span>📘 {c.facebook}</span>}
@@ -1359,16 +1359,16 @@ function Register({ customers, onSave, onBack, shopSettings }: {
 
 function AuthShell({ title, badge, sub, children, shopSettings }: { title: string, badge?: string, sub?: string, children: React.ReactNode, shopSettings?: { shop_name: string; logo_url: string | null } }) {
   return (
-    <div style={{ minHeight: '100vh', background: '#0a0a0a', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
-      <div style={{ background: '#111', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 14, padding: '36px 32px', width: '100%', maxWidth: 400 }}>
+    <div style={{ minHeight: '100vh', background: '#f5f5f5', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
+      <div style={{ background: '#ffffff', border: '1px solid #e0e0e0', borderRadius: 14, padding: '36px 32px', width: '100%', maxWidth: 400 }}>
         <div style={{ textAlign: 'center', marginBottom: 24 }}>
           {shopSettings?.logo_url
             ? <img src={shopSettings.logo_url} alt='logo' style={{ width: 50, height: 50, borderRadius: 12, objectFit: 'cover', margin: '0 auto 14px', display: 'block' }} />
             : <div style={{ width: 50, height: 50, background: 'linear-gradient(135deg,#c00,#800)', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 24, color: '#fff', margin: '0 auto 14px' }}>S</div>
           }
-          {badge && <div style={{ display: 'inline-block', background: '#c00', fontSize: 9, padding: '2px 10px', borderRadius: 3, fontWeight: 700, letterSpacing: 2, color: '#fff', marginBottom: 10 }}>{badge}</div>}
-          <div style={{ fontWeight: 700, fontSize: 18, color: '#fff' }}>{title}</div>
-          {sub && <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', marginTop: 5 }}>{sub}</div>}
+          {badge && <div style={{ display: 'inline-block', background: '#D80000', fontSize: 9, padding: '2px 10px', borderRadius: 3, fontWeight: 700, letterSpacing: 2, color: '#fff', marginBottom: 10 }}>{badge}</div>}
+          <div style={{ fontWeight: 700, fontSize: 18, color: '#0a0a0a' }}>{title}</div>
+          {sub && <div style={{ fontSize: 11, color: '#aaa', marginTop: 5 }}>{sub}</div>}
         </div>
         {children}
       </div>
@@ -1377,7 +1377,7 @@ function AuthShell({ title, badge, sub, children, shopSettings }: { title: strin
 }
 
 function ErrMsg({ msg }: { msg: string }) {
-  return <div style={{ color: '#ff6060', fontSize: 12, marginBottom: 12, padding: '8px 12px', background: 'rgba(200,0,0,0.1)', borderRadius: 5, border: '1px solid rgba(200,0,0,0.25)' }}>{msg}</div>
+  return <div style={{ color: '#ff6060', fontSize: 12, marginBottom: 12, padding: '8px 12px', background: 'rgba(216,0,0,0.1)', borderRadius: 5, border: '1px solid rgba(216,0,0,0.25)' }}>{msg}</div>
 }
 
 function fileToBase64(file: File): Promise<string> {
@@ -1403,14 +1403,14 @@ function ContactModal({ onClose }: { onClose: () => void }) {
             <div style={{ fontWeight: 700, fontSize: 17, color: '#fff', display: 'flex', alignItems: 'center', gap: 8 }}>
               📞 ช่องทางการติดต่อ
             </div>
-            <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.7)', marginTop: 3 }}>สนใจสั่งซื้อ ติดต่อเราได้เลย</div>
+            <div style={{ fontSize: 11, color: '#555', marginTop: 3 }}>สนใจสั่งซื้อ ติดต่อเราได้เลย</div>
           </div>
           <button onClick={onClose} style={{ background: 'rgba(255,255,255,0.15)', border: 'none', color: '#fff', width: 30, height: 30, borderRadius: '50%', cursor: 'pointer', fontSize: 16, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>✕</button>
         </div>
 
         <div style={{ padding: '16px 20px 20px', display: 'flex', flexDirection: 'column', gap: 10 }}>
           {loading ? (
-            <div style={{ textAlign: 'center', padding: 40, color: 'rgba(255,255,255,0.3)' }}>กำลังโหลด...</div>
+            <div style={{ textAlign: 'center', padding: 40, color: '#aaa' }}>กำลังโหลด...</div>
           ) : !contact ? (
             <div style={{ textAlign: 'center', padding: 40, color: '#ff6060' }}>ไม่สามารถโหลดข้อมูลได้</div>
           ) : (
@@ -1475,7 +1475,7 @@ function ContactModal({ onClose }: { onClose: () => void }) {
                 <div style={{ display: 'flex', gap: 8 }}>
                   {contact.phone1 && (
                     <a href={`tel:${contact.phone1}`} style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 10, padding: '12px 14px', borderRadius: 10, background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.08)', textDecoration: 'none', transition: 'border-color .15s' }}
-                      onMouseOver={e => (e.currentTarget.style.borderColor = '#c00')}
+                      onMouseOver={e => (e.currentTarget.style.borderColor = '#D80000')}
                       onMouseOut={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)')}>
                       <span style={{ fontSize: 20 }}>📱</span>
                       <div>
@@ -1486,7 +1486,7 @@ function ContactModal({ onClose }: { onClose: () => void }) {
                   )}
                   {contact.phone2 && (
                     <a href={`tel:${contact.phone2}`} style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 10, padding: '12px 14px', borderRadius: 10, background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.08)', textDecoration: 'none', transition: 'border-color .15s' }}
-                      onMouseOver={e => (e.currentTarget.style.borderColor = '#c00')}
+                      onMouseOver={e => (e.currentTarget.style.borderColor = '#D80000')}
                       onMouseOut={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)')}>
                       <span style={{ fontSize: 20 }}>📱</span>
                       <div>
@@ -1717,7 +1717,7 @@ function PriceCalculator({ shirts, collars, promotions, shippingRules, initShirt
                       onChange={(e) => { setUseCollar(e.target.checked); setCollarId(''); reset() }} />
                     <div>
                       <div style={{ fontSize: 13, fontWeight: 600 }}>เปลี่ยนคอเสื้อ</div>
-                      {!useCollar && <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)' }}>ใช้ราคาจากคอเสื้อที่เลือกแทน</div>}
+                      {!useCollar && <div style={{ fontSize: 11, color: '#aaa' }}>ใช้ราคาจากคอเสื้อที่เลือกแทน</div>}
                     </div>
                   </label>
                   {useCollar && (
@@ -1739,7 +1739,7 @@ function PriceCalculator({ shirts, collars, promotions, shippingRules, initShirt
                       onChange={(e) => { setAddPants(e.target.checked); reset() }} />
                     <div>
                       <div style={{ fontSize: 13, fontWeight: 600 }}>เพิ่มกางเกงพิมพ์ลาย</div>
-                      {!addPants && <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)' }}>บวกราคากางเกงต่อตัว</div>}
+                      {!addPants && <div style={{ fontSize: 11, color: '#aaa' }}>บวกราคากางเกงต่อตัว</div>}
                     </div>
                   </label>
                   {addPants && (
@@ -1778,7 +1778,7 @@ function PriceCalculator({ shirts, collars, promotions, shippingRules, initShirt
 
                 {/* โปรโมชั่น */}
                 {activePromo && (
-                  <div style={{ background: 'rgba(200,0,0,0.1)', border: '1px solid rgba(200,0,0,0.3)', borderRadius: 8, padding: '10px 14px' }}>
+                  <div style={{ background: 'rgba(216,0,0,0.1)', border: '1px solid rgba(216,0,0,0.3)', borderRadius: 8, padding: '10px 14px' }}>
                     <div style={{ fontSize: 12, color: '#ff6060', fontWeight: 700, marginBottom: 8 }}>🎉 {activePromo.name} — สั่ง {activePromo.min_qty}+ ตัว</div>
                     <div style={{ display: 'flex', gap: 8 }}>
                       {activePromo.type === 'free' && (
@@ -1837,7 +1837,7 @@ function PriceCalculator({ shirts, collars, promotions, shippingRules, initShirt
                 </div>
               </div>
 
-              <div style={{ background: '#161616', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '0 0 10px 10px', padding: '14px 16px', display: 'grid', gap: 8 }}>
+              <div style={{ background: '#f8f8f8', border: '1px solid #e8e8e8', borderRadius: '0 0 10px 10px', padding: '14px 16px', display: 'grid', gap: 8 }}>
                 {([
                   !useCollar && ['แบบที่เลือก', selectedShirt ? `${selectedShirt.name} (฿${shirtPrice.toLocaleString()}/ตัว)` : 'เลือกตามแบบ (฿0)'],
                   useCollar && collar && ['คอเสื้อ', `${collar.name} (฿${collarPrice.toLocaleString()}/ตัว)`],
@@ -1857,7 +1857,7 @@ function PriceCalculator({ shirts, collars, promotions, shippingRules, initShirt
                   <span>{isCustomShipping ? `฿${subtotal.toLocaleString()} + ขนส่ง` : `฿${grandTotal.toLocaleString()}`}</span>
                 </div>
                 {promoChoice === 'free' && bonusQty > 0 && (
-                  <div style={{ background: 'rgba(200,0,0,0.1)', borderRadius: 6, padding: '6px 10px', fontSize: 12, color: '#ff6060' }}>
+                  <div style={{ background: 'rgba(216,0,0,0.1)', borderRadius: 6, padding: '6px 10px', fontSize: 12, color: '#ff6060' }}>
                     🎁 ร้านจะทำเสื้อให้ {qty + bonusQty} ตัว (สั่ง {qty} + แถม {bonusQty})
                   </div>
                 )}
@@ -1971,7 +1971,7 @@ function ContactAdminModal({ notify, onClose }: {
         </div>
 
         {loading ? (
-          <div style={{ textAlign: 'center', padding: 40, color: 'rgba(255,255,255,0.3)' }}>กำลังโหลด...</div>
+          <div style={{ textAlign: 'center', padding: 40, color: '#aaa' }}>กำลังโหลด...</div>
         ) : (
           <div style={{ display: 'grid', gap: 14 }}>
 
@@ -2030,7 +2030,7 @@ function ContactAdminModal({ notify, onClose }: {
             </div>
 
             {/* Phone */}
-            <div style={{ background: '#c00', borderRadius: 10, padding: 14 }}>
+            <div style={{ background: '#D80000', borderRadius: 10, padding: 14 }}>
               <div style={{ fontSize: 12, fontWeight: 700, color: '#fff', marginBottom: 10, display: 'flex', alignItems: 'center', gap: 8 }}>
                 <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="11" fill="white"/><path d="M14.5 13.5l-1.3 1.3c-2-.5-3.7-2.1-4.2-4.1L10.3 9.4a.5.5 0 000-.7L8.6 7a.5.5 0 00-.7 0L6.5 8.4C6.2 11.7 9.2 15 12.6 14.5l1.3-1.3a.5.5 0 000-.7z" fill="#c00"/></svg>
                 เบอร์โทรศัพท์
@@ -2048,7 +2048,7 @@ function ContactAdminModal({ notify, onClose }: {
             </div>
 
             {/* Address */}
-            <div style={{ background: '#161616', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 10, padding: 14 }}>
+            <div style={{ background: '#f8f8f8', border: '1px solid #e8e8e8', borderRadius: 10, padding: 14 }}>
               <div style={{ fontSize: 12, fontWeight: 700, color: 'rgba(255,255,255,0.7)', marginBottom: 10 }}>📍 ที่อยู่หน้าร้าน</div>
               <textarea
                 style={{ ...inp, minHeight: 70, resize: 'vertical' as const }}
@@ -2076,8 +2076,8 @@ function WelcomeModal({ shopSettings, onBrowse, onAdmin }: {
   onAdmin: () => void
 }) {
   return (
-    <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.75)', zIndex: 9000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
-      <div style={{ background: '#111', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 16, padding: '36px 28px', width: '100%', maxWidth: 380, textAlign: 'center', boxShadow: '0 20px 60px rgba(0,0,0,0.8)' }}>
+    <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.55)', zIndex: 9000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
+      <div style={{ background: '#ffffff', border: '1px solid #e0e0e0', borderRadius: 16, padding: '36px 28px', width: '100%', maxWidth: 380, textAlign: 'center', boxShadow: '0 20px 60px rgba(0,0,0,0.8)' }}>
         {/* Logo */}
         <div style={{ marginBottom: 20 }}>
           {shopSettings.logo_url ? (
@@ -2088,19 +2088,19 @@ function WelcomeModal({ shopSettings, onBrowse, onAdmin }: {
           )}
         </div>
         {/* Name */}
-        <div style={{ fontWeight: 800, fontSize: 22, color: '#fff', marginBottom: 8 }}>
+        <div style={{ fontWeight: 800, fontSize: 22, color: '#0a0a0a', marginBottom: 8 }}>
           {shopSettings.shop_name || 'อีโวสปอร์ต'}
         </div>
-        <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', marginBottom: 28 }}>
+        <div style={{ fontSize: 13, color: '#888', marginBottom: 28 }}>
           {shopSettings.shop_subtitle || 'รวมแบบเสื้อและสินค้าทั้งหมด'}
         </div>
         {/* Buttons */}
         <button onClick={onBrowse}
-          style={{ width: '100%', background: '#c00', color: '#fff', border: 'none', padding: '14px', borderRadius: 10, cursor: 'pointer', fontFamily: 'inherit', fontWeight: 700, fontSize: 15, marginBottom: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+          style={{ width: '100%', background: '#D80000', color: '#fff', border: 'none', padding: '14px', borderRadius: 10, cursor: 'pointer', fontFamily: 'inherit', fontWeight: 700, fontSize: 15, marginBottom: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
           👕 เข้าชมแบบเสื้อ
         </button>
         <button onClick={onAdmin}
-          style={{ width: '100%', background: 'transparent', color: 'rgba(255,255,255,0.6)', border: '1px solid rgba(255,255,255,0.15)', padding: '13px', borderRadius: 10, cursor: 'pointer', fontFamily: 'inherit', fontWeight: 600, fontSize: 14, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+          style={{ width: '100%', background: '#f5f5f5', color: '#555', border: '1px solid #ddd', padding: '13px', borderRadius: 10, cursor: 'pointer', fontFamily: 'inherit', fontWeight: 600, fontSize: 14, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
           🔐 เข้าสู่ระบบ Admin
         </button>
       </div>
@@ -2178,7 +2178,7 @@ function ShopAdminModal({ shopSettings, setShopSettings, notify, onClose }: {
       <div className="modal-box" style={{ maxWidth: 420 }}>
         {/* Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
-          <div style={{ fontWeight: 700, fontSize: 16 }}>🏪 แก้ไขหน้าต้อนรับ</div>
+          <div style={{ fontWeight: 700, fontSize: 16, color: '#0a0a0a' }}>🏪 แก้ไขหน้าต้อนรับ</div>
           <button className="btn-outline sm" onClick={onClose}>✕ ปิด</button>
         </div>
 
@@ -2194,21 +2194,21 @@ function ShopAdminModal({ shopSettings, setShopSettings, notify, onClose }: {
               onDrop={handleDrop}
               onClick={() => !uploading && logoInputRef.current?.click()}
               style={{
-                border: `2px dashed ${dragOver ? '#c00' : 'rgba(255,255,255,0.15)'}`,
+                border: `2px dashed ${dragOver ? '#D80000' : 'rgba(255,255,255,0.15)'}`,
                 borderRadius: 12, padding: '20px 16px', textAlign: 'center',
                 cursor: uploading ? 'wait' : 'pointer',
-                background: dragOver ? 'rgba(200,0,0,0.06)' : '#111',
+                background: dragOver ? 'rgba(216,0,0,0.06)' : '#f8f8f8',
                 transition: 'all 0.2s', marginBottom: 12,
               }}
             >
               {uploading ? (
-                <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: 13 }}>⏳ กำลังอัปโหลด...</div>
+                <div style={{ color: '#888', fontSize: 13 }}>⏳ กำลังอัปโหลด...</div>
               ) : logoUrl ? (
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12, justifyContent: 'center' }}>
                   <img src={logoUrl} alt="logo" style={{ width: 64, height: 64, borderRadius: '50%', objectFit: 'cover', border: '2px solid rgba(200,0,0,0.5)' }} />
                   <div style={{ textAlign: 'left' }}>
-                    <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', marginBottom: 4 }}>📷 คลิกหรือลากรูปมาวางเพื่อเปลี่ยน</div>
-                    <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)' }}>JPG, PNG, WEBP</div>
+                    <div style={{ fontSize: 12, color: '#666', marginBottom: 4 }}>📷 คลิกหรือลากรูปมาวางเพื่อเปลี่ยน</div>
+                    <div style={{ fontSize: 11, color: '#aaa' }}>JPG, PNG, WEBP</div>
                   </div>
                 </div>
               ) : (
@@ -2230,7 +2230,7 @@ function ShopAdminModal({ shopSettings, setShopSettings, notify, onClose }: {
                 </button>
                 {confirmDelete ? (
                   <>
-                    <button style={{ flex: 1, background: '#c00', color: '#fff', border: 'none', borderRadius: 6, padding: '6px 10px', cursor: 'pointer', fontFamily: 'inherit', fontSize: 12, fontWeight: 700 }}
+                    <button style={{ flex: 1, background: '#D80000', color: '#fff', border: 'none', borderRadius: 6, padding: '6px 10px', cursor: 'pointer', fontFamily: 'inherit', fontSize: 12, fontWeight: 700 }}
                       onClick={handleDeleteLogo} disabled={saving}>
                       ✓ ยืนยันลบ
                     </button>
@@ -2248,7 +2248,7 @@ function ShopAdminModal({ shopSettings, setShopSettings, notify, onClose }: {
 
           {/* Shop Name */}
           <div>
-            <div className="section-label">ชื่อร้าน <span style={{ color: '#c00' }}>*</span></div>
+            <div className="section-label">ชื่อร้าน <span style={{ color: '#D80000' }}>*</span></div>
             <input style={inp} value={name} onChange={e => setName(e.target.value)} placeholder="EVO SPORT-อีโวสปอร์ต" />
           </div>
 
@@ -2259,15 +2259,15 @@ function ShopAdminModal({ shopSettings, setShopSettings, notify, onClose }: {
           </div>
 
           {/* Live Preview */}
-          <div style={{ background: '#0d0d0d', borderRadius: 10, padding: 16, textAlign: 'center', border: '1px solid rgba(255,255,255,0.06)' }}>
-            <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', marginBottom: 12, letterSpacing: 1 }}>PREVIEW — หน้าต้อนรับ</div>
+          <div style={{ background: '#f8f8f8', borderRadius: 10, padding: 16, textAlign: 'center', border: '1px solid #e8e8e8' }}>
+            <div style={{ fontSize: 10, color: '#aaa', marginBottom: 12, letterSpacing: 1 }}>PREVIEW — หน้าต้อนรับ</div>
             {logoUrl ? (
               <img src={logoUrl} alt="preview" style={{ width: 60, height: 60, borderRadius: '50%', objectFit: 'cover', margin: '0 auto 8px', display: 'block', border: '2px solid rgba(200,0,0,0.4)' }} />
             ) : (
               <div style={{ width: 60, height: 60, background: 'linear-gradient(135deg,#c00,#800)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 24, color: '#fff', margin: '0 auto 8px' }}>S</div>
             )}
-            <div style={{ fontWeight: 800, fontSize: 18, color: '#fff', marginBottom: 4 }}>{name || 'ชื่อร้าน'}</div>
-            <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)' }}>{subtitle || 'คำอธิบาย'}</div>
+            <div style={{ fontWeight: 800, fontSize: 18, color: '#0a0a0a', marginBottom: 4 }}>{name || 'ชื่อร้าน'}</div>
+            <div style={{ fontSize: 12, color: '#888' }}>{subtitle || 'คำอธิบาย'}</div>
           </div>
 
           <button className="btn-red" style={{ width: '100%', padding: '12px' }}
@@ -2368,15 +2368,15 @@ function ShirtTypeManager({ shirtTypes, setShirtTypes, notify }: {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
       {/* Add Form */}
-      <div style={{ background: '#0d0d0d', border: '1px solid #1e1e1e', borderRadius: 8, padding: 14, display: 'flex', flexDirection: 'column', gap: 10 }}>
-        <div style={{ fontSize: 12, color: '#c00', fontWeight: 700 }}>+ เพิ่มประเภทเสื้อใหม่</div>
+      <div style={{ background: '#f5f5f5', border: '1px solid #e0e0e0', borderRadius: 8, padding: 14, display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <div style={{ fontSize: 12, color: '#D80000', fontWeight: 700 }}>+ เพิ่มประเภทเสื้อใหม่</div>
         <div style={{ display: 'flex', gap: 8, alignItems: 'flex-start', flexWrap: 'wrap', position: 'relative' }}>
           <div style={{ position: 'relative' }}>
             <button onClick={() => setShowPicker(!showPicker)} style={{ fontSize: 22, background: '#1a1a1a', border: '1px solid #333', borderRadius: 6, padding: '5px 10px', cursor: 'pointer' }}>{newIcon}</button>
             {showPicker && (
-              <div style={{ position: 'absolute', top: '110%', left: 0, zIndex: 999, background: '#111', border: '1px solid #222', borderRadius: 8, padding: 8, display: 'flex', flexWrap: 'wrap', gap: 4, width: 220 }}>
+              <div style={{ position: 'absolute', top: '110%', left: 0, zIndex: 999, background: '#fff', border: '1px solid #ddd', borderRadius: 8, padding: 8, display: 'flex', flexWrap: 'wrap', gap: 4, width: 220 }}>
                 {EMOJI_PICKS.map(e => (
-                  <button key={e} onClick={() => { setNewIcon(e); setShowPicker(false) }} style={{ fontSize: 18, background: newIcon === e ? '#c00' : '#1a1a1a', border: '1px solid #2a2a2a', borderRadius: 5, padding: '3px 6px', cursor: 'pointer' }}>{e}</button>
+                  <button key={e} onClick={() => { setNewIcon(e); setShowPicker(false) }} style={{ fontSize: 18, background: newIcon === e ? '#D80000' : '#1a1a1a', border: '1px solid #2a2a2a', borderRadius: 5, padding: '3px 6px', cursor: 'pointer' }}>{e}</button>
                 ))}
               </div>
             )}
@@ -2389,7 +2389,7 @@ function ShirtTypeManager({ shirtTypes, setShirtTypes, notify }: {
       </div>
 
       {/* hint */}
-      <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', display: 'flex', alignItems: 'center', gap: 6 }}>
+      <div style={{ fontSize: 11, color: '#aaa', display: 'flex', alignItems: 'center', gap: 6 }}>
         <span>☰</span> ลากเพื่อเรียงลำดับ &nbsp;|&nbsp; ปุ่ม ↑↓ สำหรับมือถือ
       </div>
 
@@ -2403,7 +2403,7 @@ function ShirtTypeManager({ shirtTypes, setShirtTypes, notify }: {
             onDragOver={e => { e.preventDefault(); handleDragOver(type.id) }}
             onDragEnd={handleDragEnd}
             style={{
-              background: '#0d0d0d',
+              background: '#f5f5f5',
               border: dragOverId === type.id ? '1px dashed #c00' : '1px solid #1a1a1a',
               borderRadius: 8,
               padding: '10px 12px',
