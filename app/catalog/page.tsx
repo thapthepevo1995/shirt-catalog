@@ -497,7 +497,11 @@ function BannerSection({ banners, setBanners, isAdmin, notify }: {
 }) {
   const [cur, setCur] = useState(0)
   const [ov, setOv] = useState(false)
+  const [saving, setSaving] = useState(false)
   const ref = useRef<HTMLInputElement>(null)
+
+  // Preview state (ยังไม่บันทึก)
+  const [preview, setPreview] = useState<{ file: File; dataUrl: string; posX: number; posY: number } | null>(null)
 
   useEffect(() => {
     if (banners.length < 2) return
@@ -505,22 +509,127 @@ function BannerSection({ banners, setBanners, isAdmin, notify }: {
     return () => clearInterval(t)
   }, [banners.length])
 
-  const handleFile = async (file: File) => {
-    if (!file.type.startsWith('image/')) return
-    const url = await uploadBase64Image(await fileToBase64(file), 'banners')
-    if (!url) { notify('อัปโหลดรูปไม่สำเร็จ', 'err'); return }
-    const { data } = await db.from('banners').insert([{ name: file.name, image_url: url, sort_order: banners.length }]).select().single()
-    if (data) { setBanners((prev) => [...prev, data]); notify('เพิ่ม Banner แล้ว') }
+  const handleFile = (file: File) => {
+    if (!file.type.startsWith('image/')) { notify('ไฟล์ต้องเป็นรูปภาพเท่านั้น', 'err'); return }
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      setPreview({ file, dataUrl: e.target?.result as string, posX: 50, posY: 50 })
+    }
+    reader.readAsDataURL(file)
+  }
+
+  const handleSave = async () => {
+    if (!preview) return
+    setSaving(true)
+    const url = await uploadBase64Image(preview.dataUrl, 'banners')
+    if (!url) { notify('อัปโหลดรูปไม่สำเร็จ', 'err'); setSaving(false); return }
+    const pos = `${preview.posX}% ${preview.posY}%`
+    const { data } = await db.from('banners').insert([{
+      name: preview.file.name,
+      image_url: url,
+      sort_order: banners.length,
+      object_position: pos,
+    }]).select().single()
+    if (data) { setBanners((prev) => [...prev, data]); notify('เพิ่ม Banner แล้ว ✓') }
+    setPreview(null)
+    setSaving(false)
   }
 
   const idx = banners.length > 0 ? cur % banners.length : 0
+
+  // ถ้ากำลัง preview รูปใหม่
+  if (preview) {
+    return (
+      <div style={{ background: '#0d0d0d', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+        <div style={{ maxWidth: 1280, margin: '0 auto', padding: 20 }}>
+          {/* Preview Banner */}
+          <div style={{ position: 'relative', borderRadius: 12, overflow: 'hidden', width: '100%', paddingTop: 'clamp(120px, 28vw, 380px)', height: 0, marginBottom: 12 }}>
+            <img
+              src={preview.dataUrl}
+              alt="preview"
+              style={{
+                position: 'absolute', inset: 0, width: '100%', height: '100%',
+                objectFit: 'cover',
+                objectPosition: `${preview.posX}% ${preview.posY}%`,
+                transition: 'object-position 0.2s',
+              }}
+            />
+            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right,rgba(0,0,0,0.3),transparent)' }} />
+            {/* Badge */}
+            <div style={{ position: 'absolute', top: 12, left: 12, background: 'rgba(200,0,0,0.85)', color: '#fff', fontSize: 11, fontWeight: 700, padding: '4px 10px', borderRadius: 6 }}>
+              PREVIEW — ยังไม่บันทึก
+            </div>
+          </div>
+
+          {/* Position Controls */}
+          <div style={{ background: '#111', borderRadius: 10, padding: 16, border: '1px solid rgba(255,255,255,0.08)', marginBottom: 12 }}>
+            <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', marginBottom: 12, fontWeight: 600 }}>📐 ปรับตำแหน่งรูปภาพ</div>
+
+            {/* Y Axis (ขึ้น-ลง) */}
+            <div style={{ marginBottom: 12 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: 'rgba(255,255,255,0.4)', marginBottom: 6 }}>
+                <span>↕️ ขึ้น-ลง</span>
+                <span>{preview.posY}%</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <button onClick={() => setPreview(p => p && { ...p, posY: Math.max(0, p.posY - 5) })}
+                  style={{ background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', width: 32, height: 32, borderRadius: 6, cursor: 'pointer', fontSize: 16, flexShrink: 0 }}>↑</button>
+                <input type="range" min={0} max={100} value={preview.posY}
+                  onChange={e => setPreview(p => p && { ...p, posY: Number(e.target.value) })}
+                  style={{ flex: 1, accentColor: '#c00' }} />
+                <button onClick={() => setPreview(p => p && { ...p, posY: Math.min(100, p.posY + 5) })}
+                  style={{ background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', width: 32, height: 32, borderRadius: 6, cursor: 'pointer', fontSize: 16, flexShrink: 0 }}>↓</button>
+              </div>
+            </div>
+
+            {/* X Axis (ซ้าย-ขวา) */}
+            <div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: 'rgba(255,255,255,0.4)', marginBottom: 6 }}>
+                <span>↔️ ซ้าย-ขวา</span>
+                <span>{preview.posX}%</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <button onClick={() => setPreview(p => p && { ...p, posX: Math.max(0, p.posX - 5) })}
+                  style={{ background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', width: 32, height: 32, borderRadius: 6, cursor: 'pointer', fontSize: 16, flexShrink: 0 }}>←</button>
+                <input type="range" min={0} max={100} value={preview.posX}
+                  onChange={e => setPreview(p => p && { ...p, posX: Number(e.target.value) })}
+                  style={{ flex: 1, accentColor: '#c00' }} />
+                <button onClick={() => setPreview(p => p && { ...p, posX: Math.min(100, p.posX + 5) })}
+                  style={{ background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', width: 32, height: 32, borderRadius: 6, cursor: 'pointer', fontSize: 16, flexShrink: 0 }}>→</button>
+              </div>
+            </div>
+
+            {/* Reset */}
+            <div style={{ marginTop: 10, textAlign: 'right' }}>
+              <button onClick={() => setPreview(p => p && { ...p, posX: 50, posY: 50 })}
+                style={{ background: 'transparent', border: 'none', color: 'rgba(255,255,255,0.35)', fontSize: 11, cursor: 'pointer', fontFamily: 'inherit' }}>
+                ↺ รีเซ็ตกลาง
+              </button>
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div style={{ display: 'flex', gap: 10 }}>
+            <button onClick={() => setPreview(null)}
+              style={{ flex: 1, background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', color: 'rgba(255,255,255,0.6)', padding: '11px', borderRadius: 8, cursor: 'pointer', fontFamily: 'inherit', fontWeight: 600, fontSize: 14 }}>
+              ✕ ยกเลิก
+            </button>
+            <button onClick={handleSave} disabled={saving}
+              style={{ flex: 2, background: saving ? '#555' : '#c00', color: '#fff', border: 'none', padding: '11px', borderRadius: 8, cursor: saving ? 'wait' : 'pointer', fontFamily: 'inherit', fontWeight: 700, fontSize: 14 }}>
+              {saving ? '⏳ กำลังบันทึก...' : '💾 บันทึก Banner'}
+            </button>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div style={{ background: '#0d0d0d', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: 20 }}>
         {banners.length > 0 ? (
           <div style={{ position: 'relative', borderRadius: 12, overflow: 'hidden', width: '100%', paddingTop: 'clamp(120px, 28vw, 380px)', height: 0 }}>
-            <img src={banners[idx].image_url} alt="banner" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+            <img src={banners[idx].image_url} alt="banner" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: (banners[idx] as any).object_position || '50% 50%' }} />
             <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right,rgba(0,0,0,0.45),transparent)' }} />
             {banners.length > 1 && (
               <>
@@ -551,7 +660,7 @@ function BannerSection({ banners, setBanners, isAdmin, notify }: {
             onClick={() => ref.current?.click()}>
             <div style={{ fontSize: 32 }}>🖼</div>
             <div style={{ color: '#c00', fontWeight: 700, fontSize: 14 }}>ลาก-วางรูป Banner หรือคลิกเลือกไฟล์</div>
-            <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)' }}>JPG · PNG · WEBP — อัปโหลดสู่ Supabase Storage</div>
+            <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)' }}>JPG · PNG · WEBP — ปรับตำแหน่งก่อนบันทึกได้</div>
           </div>
         ) : (
           <div style={{ height: 60, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.1)', fontSize: 12 }}>ยังไม่มี Banner</div>
