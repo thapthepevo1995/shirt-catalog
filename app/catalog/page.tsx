@@ -2001,16 +2001,41 @@ function ShopAdminModal({ shopSettings, setShopSettings, notify, onClose }: {
   const [subtitle, setSubtitle] = useState(shopSettings.shop_subtitle || '')
   const [logoUrl, setLogoUrl] = useState(shopSettings.logo_url || '')
   const [saving, setSaving] = useState(false)
+  const [uploading, setUploading] = useState(false)
+  const [dragOver, setDragOver] = useState(false)
+  const [confirmDelete, setConfirmDelete] = useState(false)
   const logoInputRef = useRef<HTMLInputElement>(null)
 
   const handleLogoUpload = async (file: File) => {
-    if (!file.type.startsWith('image/')) return
+    if (!file.type.startsWith('image/')) { notify('ไฟล์ต้องเป็นรูปภาพเท่านั้น', 'err'); return }
+    setUploading(true)
     const url = await uploadBase64Image(await fileToBase64(file), 'logos')
-    if (url) { setLogoUrl(url); notify('อัปโหลดโลโก้สำเร็จ') }
+    setUploading(false)
+    if (url) { setLogoUrl(url); notify('อัปโหลดโลโก้สำเร็จ ✓') }
     else notify('อัปโหลดไม่สำเร็จ', 'err')
   }
 
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault(); setDragOver(false)
+    const file = e.dataTransfer.files?.[0]
+    if (file) handleLogoUpload(file)
+  }
+
+  const handleDeleteLogo = async () => {
+    setSaving(true)
+    const { error } = await db.from('shop_settings').upsert({
+      id: 'main', shop_name: name, shop_subtitle: subtitle, logo_url: null, updated_at: new Date().toISOString()
+    })
+    setSaving(false)
+    if (error) { notify('ลบโลโก้ไม่สำเร็จ', 'err'); return }
+    setLogoUrl('')
+    setShopSettings((p: any) => ({ ...p, logo_url: null }))
+    setConfirmDelete(false)
+    notify('ลบโลโก้แล้ว ✓')
+  }
+
   const handleSave = async () => {
+    if (!name.trim()) { notify('กรุณาใส่ชื่อร้าน', 'err'); return }
     setSaving(true)
     const { error } = await db.from('shop_settings').upsert({
       id: 'main', shop_name: name, shop_subtitle: subtitle, logo_url: logoUrl || null, updated_at: new Date().toISOString()
@@ -2040,41 +2065,86 @@ function ShopAdminModal({ shopSettings, setShopSettings, notify, onClose }: {
         </div>
 
         <div style={{ display: 'grid', gap: 16 }}>
-          {/* Logo */}
-          <div style={{ textAlign: 'center' }}>
-            <div className="section-label" style={{ textAlign: 'left', marginBottom: 8 }}>โลโก้ร้าน</div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-              {logoUrl ? (
-                <img src={logoUrl} alt="logo" style={{ width: 72, height: 72, borderRadius: '50%', objectFit: 'cover', border: '2px solid rgba(200,0,0,0.4)', flexShrink: 0 }} />
+          {/* Logo Upload Zone */}
+          <div>
+            <div className="section-label" style={{ marginBottom: 8 }}>โลโก้ร้าน</div>
+
+            {/* Drag & Drop Zone */}
+            <div
+              onDragOver={e => { e.preventDefault(); setDragOver(true) }}
+              onDragLeave={() => setDragOver(false)}
+              onDrop={handleDrop}
+              onClick={() => !uploading && logoInputRef.current?.click()}
+              style={{
+                border: `2px dashed ${dragOver ? '#c00' : 'rgba(255,255,255,0.15)'}`,
+                borderRadius: 12, padding: '20px 16px', textAlign: 'center',
+                cursor: uploading ? 'wait' : 'pointer',
+                background: dragOver ? 'rgba(200,0,0,0.06)' : '#111',
+                transition: 'all 0.2s', marginBottom: 12,
+              }}
+            >
+              {uploading ? (
+                <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: 13 }}>⏳ กำลังอัปโหลด...</div>
+              ) : logoUrl ? (
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12, justifyContent: 'center' }}>
+                  <img src={logoUrl} alt="logo" style={{ width: 64, height: 64, borderRadius: '50%', objectFit: 'cover', border: '2px solid rgba(200,0,0,0.5)' }} />
+                  <div style={{ textAlign: 'left' }}>
+                    <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', marginBottom: 4 }}>📷 คลิกหรือลากรูปมาวางเพื่อเปลี่ยน</div>
+                    <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)' }}>JPG, PNG, WEBP</div>
+                  </div>
+                </div>
               ) : (
-                <div style={{ width: 72, height: 72, background: 'linear-gradient(135deg,#c00,#800)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 28, color: '#fff', flexShrink: 0 }}>S</div>
+                <div>
+                  <div style={{ fontSize: 32, marginBottom: 8 }}>🖼️</div>
+                  <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', marginBottom: 4 }}>คลิกหรือลากรูปโลโก้มาวางที่นี่</div>
+                  <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.25)' }}>JPG, PNG, WEBP — แนะนำ 1:1 (สี่เหลี่ยมจตุรัส)</div>
+                </div>
               )}
-              <div style={{ flex: 1 }}>
-                <input style={{ ...inp, marginBottom: 6 }} value={logoUrl} onChange={e => setLogoUrl(e.target.value)} placeholder="URL โลโก้ หรืออัปโหลด..." />
-                <button className="btn-outline sm" onClick={() => logoInputRef.current?.click()}>📷 อัปโหลดโลโก้</button>
-              </div>
             </div>
             <input ref={logoInputRef} type="file" accept="image/*" style={{ display: 'none' }}
               onChange={e => { if (e.target.files?.[0]) handleLogoUpload(e.target.files[0]); e.target.value = '' }} />
+
+            {/* Logo Actions */}
+            {logoUrl && (
+              <div style={{ display: 'flex', gap: 8 }}>
+                <button className="btn-outline sm" style={{ flex: 1 }} onClick={() => logoInputRef.current?.click()} disabled={uploading}>
+                  📷 เปลี่ยนโลโก้
+                </button>
+                {confirmDelete ? (
+                  <>
+                    <button style={{ flex: 1, background: '#c00', color: '#fff', border: 'none', borderRadius: 6, padding: '6px 10px', cursor: 'pointer', fontFamily: 'inherit', fontSize: 12, fontWeight: 700 }}
+                      onClick={handleDeleteLogo} disabled={saving}>
+                      ✓ ยืนยันลบ
+                    </button>
+                    <button className="btn-outline sm" onClick={() => setConfirmDelete(false)}>ยกเลิก</button>
+                  </>
+                ) : (
+                  <button className="btn-outline sm" style={{ flex: 1, color: '#ff6b6b', borderColor: 'rgba(255,107,107,0.3)' }}
+                    onClick={() => setConfirmDelete(true)}>
+                    🗑️ ลบโลโก้
+                  </button>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Shop Name */}
           <div>
-            <div className="section-label">ชื่อร้าน</div>
-            <input style={inp} value={name} onChange={e => setName(e.target.value)} placeholder="ชื่อร้าน" />
+            <div className="section-label">ชื่อร้าน <span style={{ color: '#c00' }}>*</span></div>
+            <input style={inp} value={name} onChange={e => setName(e.target.value)} placeholder="EVO SPORT-อีโวสปอร์ต" />
           </div>
 
           {/* Subtitle */}
           <div>
             <div className="section-label">คำอธิบายใต้ชื่อร้าน</div>
-            <input style={inp} value={subtitle} onChange={e => setSubtitle(e.target.value)} placeholder="รวมแบบเสื้อและสินค้าทั้งหมด" />
+            <input style={inp} value={subtitle} onChange={e => setSubtitle(e.target.value)} placeholder="เสื้อกีฬาพิมพ์ลาย EVO SPORT ขอนแก่น" />
           </div>
 
-          {/* Preview */}
+          {/* Live Preview */}
           <div style={{ background: '#0d0d0d', borderRadius: 10, padding: 16, textAlign: 'center', border: '1px solid rgba(255,255,255,0.06)' }}>
-            <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', marginBottom: 12, letterSpacing: 1 }}>PREVIEW</div>
+            <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', marginBottom: 12, letterSpacing: 1 }}>PREVIEW — หน้าต้อนรับ</div>
             {logoUrl ? (
-              <img src={logoUrl} alt="preview" style={{ width: 60, height: 60, borderRadius: '50%', objectFit: 'cover', margin: '0 auto 8px', display: 'block' }} />
+              <img src={logoUrl} alt="preview" style={{ width: 60, height: 60, borderRadius: '50%', objectFit: 'cover', margin: '0 auto 8px', display: 'block', border: '2px solid rgba(200,0,0,0.4)' }} />
             ) : (
               <div style={{ width: 60, height: 60, background: 'linear-gradient(135deg,#c00,#800)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 24, color: '#fff', margin: '0 auto 8px' }}>S</div>
             )}
@@ -2082,7 +2152,8 @@ function ShopAdminModal({ shopSettings, setShopSettings, notify, onClose }: {
             <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)' }}>{subtitle || 'คำอธิบาย'}</div>
           </div>
 
-          <button className="btn-red" style={{ width: '100%', padding: '12px' }} disabled={saving} onClick={handleSave}>
+          <button className="btn-red" style={{ width: '100%', padding: '12px' }}
+            disabled={saving || uploading || !name.trim()} onClick={handleSave}>
             {saving ? '⏳ กำลังบันทึก...' : '💾 บันทึกหน้าต้อนรับ'}
           </button>
         </div>
