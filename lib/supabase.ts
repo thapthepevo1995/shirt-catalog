@@ -6,7 +6,10 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 // Client หลัก (สำหรับ Storage เท่านั้น)
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
-export const db = supabase
+// Client สำหรับ DB — ชี้ที่ shirt_catalog schema (แยกจาก UNBOX)
+export const db = createClient(supabaseUrl, supabaseAnonKey, {
+  db: { schema: 'shirt_catalog' },
+})
 
 export type Shirt = {
   id: string
