@@ -85,7 +85,7 @@ body {
 
 .card-shirt {
   position: relative;
-  background: #0a0a0a; border: 1px solid #e0e0e0;
+  background: #0a0a0a; border: 1px solid #D80000;
   border-radius: 10px; overflow: hidden; transition: all .22s;
 }
 .card-shirt:hover {
@@ -221,6 +221,10 @@ input[type=checkbox] { accent-color: #D80000; width: 14px; height: 14px; cursor:
   width: 20vw;
   min-width: 60px;
   max-width: 180px;
+  background: #0a0a0a;
+  border: 2px solid #D80000;
+  border-radius: 10px;
+  padding: 10px;
 }
 
 .shirt-type-mobile-filter { display: none !important; }
