@@ -216,13 +216,13 @@ export default function CatalogPage() {
               <>
                 <span style={{ background: 'linear-gradient(90deg,#c00,#800)', fontSize: 10, padding: '2px 8px', borderRadius: 3, fontWeight: 700, letterSpacing: 1, color: '#fff' }}>ADMIN</span>
                 <span style={{ fontSize: 12, color: '#888' }}>{adminUser}</span>
-                <button className="btn-outline sm" onClick={() => setShowCustMgr(!showCustMgr)}>{showCustMgr ? '← กลับ' : `สมาชิก (${customers.length})`}</button>
-                <button className="btn-outline sm" onClick={() => { setAdminUser(null); setShowCustMgr(false); notify('ออกจากระบบแล้ว', 'err') }}>ออก</button>
+                <button className="btn-black sm" onClick={() => setShowCustMgr(!showCustMgr)}>{showCustMgr ? '← กลับ' : `สมาชิก (${customers.length})`}</button>
+                <button className="btn-red sm" onClick={() => { setAdminUser(null); setShowCustMgr(false); notify('ออกจากระบบแล้ว', 'err') }}>ออก</button>
               </>
             ) : custUser ? (
               <>
                 <span style={{ fontSize: 12, color: '#888' }}>👤 {custUser.name}</span>
-                <button className="btn-outline sm" onClick={() => { setCustUser(null); notify('ออกจากระบบแล้ว', 'err') }}>ออก</button>
+                <button className="btn-red sm" onClick={() => { setCustUser(null); notify('ออกจากระบบแล้ว', 'err') }}>ออก</button>
               </>
             ) : (
               <>
@@ -992,11 +992,11 @@ function SettingsModal({ collars, setCollars, prodTypes, setProdTypes, fabricTyp
       <div className="modal-box" style={{ maxWidth: 640 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
           <div style={{ fontWeight: 700, fontSize: 16 }}>⚙ จัดการประเภทสินค้า</div>
-          <button className="btn-outline sm" onClick={onClose}>✕</button>
+          <button className="btn-red sm" onClick={onClose}>✕</button>
         </div>
         <div style={{ display: 'flex', gap: 4, marginBottom: 16, borderBottom: '1px solid #e8e8e8', paddingBottom: 12, flexWrap: 'wrap' }}>
           {TABS.map(([id, lbl]) => (
-            <div key={id} className={`nav-item${tab === id ? ' active' : ''}`} style={{ padding: '5px 12px', borderRadius: 5, fontSize: 12 }} onClick={() => setTab(id as any)}>{lbl}</div>
+            <button key={id} onClick={() => setTab(id as any)} style={{ padding: '5px 12px', borderRadius: 5, fontSize: 12, border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontWeight: 600, background: tab === id ? '#111' : '#D80000', color: '#fff', transition: 'background 0.15s' }}>{lbl}</button>
           ))}
         </div>
         {tab === 'collar' && <SupabaseTypeList table="collars" items={collars} setItems={setCollars} ph="เพิ่มประเภทคอเสื้อ..." notify={notify} />}
@@ -1051,7 +1051,7 @@ function SupabaseTypeList({ table, items, setItems, ph, notify }: {
                 <button className="btn-outline sm" onClick={() => setEi(null)}>ยกเลิก</button></>
               : <><span style={{ flex: 1, fontSize: 13 }}>{item.name}</span>
                 <button className="btn-outline sm" onClick={() => { setEi(i); setEv(item.name) }}>แก้ไข</button>
-                <button className="btn-ghost" onClick={() => del(i)}>ลบ</button></>
+                <button className="btn-red sm" onClick={() => del(i)}>ลบ</button></>
             }
           </div>
         ))}
@@ -1174,7 +1174,7 @@ function PromotionList({ promotions, setPromotions, notify }: {
             </div>
             <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 10, background: p.is_active ? '#D80000' : '#333', color: '#fff', cursor: 'pointer' }} onClick={() => toggleActive(p)}>{p.is_active ? 'เปิด' : 'ปิด'}</span>
             <button className="btn-outline sm" onClick={() => { setEditId(p.id); setShowAdd(false); setF({ name: p.name, is_active: p.is_active, min_qty: p.min_qty, type: p.type, free_qty: p.free_qty, discount_qty: p.discount_qty, discount_pct: p.discount_pct, discount_thb: p.discount_thb }) }}>แก้ไข</button>
-            <button className="btn-ghost" onClick={() => del(p.id)}>ลบ</button>
+            <button className="btn-red sm" onClick={() => del(p.id)}>ลบ</button>
           </div>
         ))}
         {promotions.length === 0 && <div style={{ textAlign: 'center', color: '#ccc', fontSize: 13, padding: 20 }}>ยังไม่มีโปรโมชั่น</div>}
@@ -1247,7 +1247,7 @@ function ShippingList({ shippingRules, setShippingRules, notify }: {
               <div style={{ fontSize: 11, color: '#888' }}>{r.min_qty}{r.max_qty != null ? `–${r.max_qty}` : '+'} ตัว · ฿{Number(r.price).toLocaleString()}</div>
             </div>
             <button className="btn-outline sm" onClick={() => { setEditId(r.id); setShowAdd(false); setF({ name: r.name, min_qty: r.min_qty, max_qty: r.max_qty, price: r.price }) }}>แก้ไข</button>
-            <button className="btn-ghost" onClick={() => del(r.id)}>ลบ</button>
+            <button className="btn-red sm" onClick={() => del(r.id)}>ลบ</button>
           </div>
         ))}
       </div>
@@ -1286,7 +1286,7 @@ function CustomerMgr({ customers, setCustomers, notify }: {
                   {c.joined_at && <span>🕐 {new Date(c.joined_at).toLocaleDateString('th-TH')}</span>}
                 </div>
               </div>
-              <button className="btn-ghost" onClick={async () => {
+              <button className="btn-red sm" onClick={async () => {
                 await db.from('customers').delete().eq('id', c.id)
                 setCustomers((prev) => prev.filter((x) => x.id !== c.id))
                 notify('ลบสมาชิกแล้ว', 'err')
@@ -2179,7 +2179,7 @@ function ShopAdminModal({ shopSettings, setShopSettings, notify, onClose }: {
         {/* Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
           <div style={{ fontWeight: 700, fontSize: 16, color: '#0a0a0a' }}>🏪 แก้ไขหน้าต้อนรับ</div>
-          <button className="btn-outline sm" onClick={onClose}>✕ ปิด</button>
+          <button className="btn-red sm" onClick={onClose}>✕ ปิด</button>
         </div>
 
         <div style={{ display: 'grid', gap: 16 }}>
@@ -2403,8 +2403,8 @@ function ShirtTypeManager({ shirtTypes, setShirtTypes, notify }: {
             onDragOver={e => { e.preventDefault(); handleDragOver(type.id) }}
             onDragEnd={handleDragEnd}
             style={{
-              background: '#f5f5f5',
-              border: dragOverId === type.id ? '1px dashed #c00' : '1px solid #1a1a1a',
+              background: '#111',
+              border: dragOverId === type.id ? '1px dashed #D80000' : '1px solid #333',
               borderRadius: 8,
               padding: '10px 12px',
               opacity: dragId === type.id ? 0.4 : 1,
@@ -2424,11 +2424,11 @@ function ShirtTypeManager({ shirtTypes, setShirtTypes, notify }: {
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
                 {/* drag handle + info */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                  <span style={{ color: 'rgba(255,255,255,0.2)', fontSize: 16, cursor: 'grab', userSelect: 'none' }}>⠿</span>
+                  <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: 16, cursor: 'grab', userSelect: 'none' }}>⠿</span>
                   <span style={{ fontSize: 20 }}>{type.icon || '👕'}</span>
                   <div>
                     <div style={{ fontSize: 13, fontWeight: 600, color: '#fff' }}>{type.name}</div>
-                    <div style={{ fontSize: 10, color: '#555' }}>slug: {type.slug} · ลำดับ {idx + 1}</div>
+                    <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.45)' }}>slug: {type.slug} · ลำดับ {idx + 1}</div>
                   </div>
                 </div>
                 {/* actions */}
@@ -2449,7 +2449,7 @@ function ShirtTypeManager({ shirtTypes, setShirtTypes, notify }: {
                     title="เลื่อนลง"
                   >↓</button>
                   <button className="btn-outline sm" onClick={() => { setEditId(type.id); setEditName(type.name); setEditSlug(type.slug); setEditIcon(type.icon || '👕') }}>✏</button>
-                  <button className="btn-ghost sm" onClick={() => handleDelete(type.id, type.name)}>✕</button>
+                  <button className="btn-red sm" onClick={() => handleDelete(type.id, type.name)}>✕</button>
                 </div>
               </div>
             )}
