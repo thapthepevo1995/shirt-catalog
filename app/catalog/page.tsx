@@ -772,10 +772,10 @@ function ShirtCard({ shirt, isAdmin, canDrag, isDragging, isDragOver, onDragStar
           </div>
         )}
         {isAdmin && (
-          <div style={{ display: 'flex', gap: 5, marginTop: 10 }}>
-            <button className="btn-outline sm" style={{ flex: 1 }} onClick={onEdit}>✏ แก้ไข</button>
-            <button className="btn-outline sm" style={{ flex: 1 }} onClick={onDupe}>⧉ คัดลอก</button>
-            <button className="btn-ghost" style={{ flex: 1 }} onClick={onDelete}>✕</button>
+          <div style={{ display: 'flex', gap: 5, marginTop: 8 }}>
+            <button className="btn-red sm" style={{ flex: 1, padding: '5px 6px', fontSize: 11 }} onClick={onEdit}>✏ แก้ไข</button>
+            <button className="btn-black sm" style={{ flex: 1, padding: '5px 6px', fontSize: 11 }} onClick={onDupe}>⧉ คัดลอก</button>
+            <button style={{ flex: 0.5, padding: '5px 6px', fontSize: 13, background: 'transparent', color: '#D80000', border: '2px solid #D80000', borderRadius: 5, cursor: 'pointer', fontFamily: 'inherit', fontWeight: 700, lineHeight: 1 }} onClick={onDelete}>✕</button>
           </div>
         )}
       </div>
