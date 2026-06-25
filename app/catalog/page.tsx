@@ -837,7 +837,7 @@ function ShirtModal({ initial, collars, prodTypes, fabricTypes, shirtTypes, cate
           <div style={{ fontWeight: 700, fontSize: 16 }}>{initial
             ? (f.category === 'fabric' ? '✏ แก้ไขเนื้อผ้า' : f.category === 'collar' ? '✏ แก้ไขคอเสื้อ' : f.category === 'promotion' ? '✏ แก้ไขโปรโมชั่น' : f.category === 'photo' ? '✏ แก้ไขรูปภาพ' : '✏ แก้ไขแบบเสื้อ')
             : (f.category === 'fabric' ? '+ เพิ่มเนื้อผ้าใหม่' : f.category === 'collar' ? '+ เพิ่มคอเสื้อ' : f.category === 'promotion' ? '+ เพิ่มโปรโมชั่น' : f.category === 'photo' ? '+ เพิ่มรูปภาพ' : '+ เพิ่มแบบเสื้อใหม่')}</div>
-          <button className="btn-outline sm" onClick={onClose}>✕ ปิด</button>
+          <button className="btn-red sm" onClick={onClose}>✕ ปิด</button>
         </div>
         <div className="section-label">รูปภาพ (อัปโหลดสู่ Supabase Storage)</div>
         {imgPreview ? (
@@ -1967,7 +1967,7 @@ function ContactAdminModal({ notify, onClose }: {
         {/* Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
           <div style={{ fontWeight: 700, fontSize: 16 }}>📞 จัดการช่องทางติดต่อ</div>
-          <button className="btn-outline sm" onClick={onClose}>✕ ปิด</button>
+          <button className="btn-red sm" onClick={onClose}>✕ ปิด</button>
         </div>
 
         {loading ? (
@@ -1983,11 +1983,11 @@ function ContactAdminModal({ notify, onClose }: {
               </div>
               <div style={{ display: 'grid', gap: 8 }}>
                 <div>
-                  <div className="section-label">ชื่อที่แสดง</div>
+                  <div className="section-label" style={{ color: '#fff' }}>ชื่อที่แสดง</div>
                   <input style={inp} value={f.facebook_label} onChange={e => set('facebook_label', e.target.value)} placeholder="เช่น Facebook Page" />
                 </div>
                 <div>
-                  <div className="section-label">Facebook URL (m.me/...)</div>
+                  <div className="section-label" style={{ color: '#fff' }}>Facebook URL (m.me/...)</div>
                   <input style={inp} value={f.facebook_url} onChange={e => set('facebook_url', e.target.value)} placeholder="https://m.me/..." />
                 </div>
               </div>
@@ -2001,19 +2001,19 @@ function ContactAdminModal({ notify, onClose }: {
               </div>
               <div style={{ display: 'grid', gap: 8 }}>
                 <div>
-                  <div className="section-label">ชื่อที่แสดง</div>
+                  <div className="section-label" style={{ color: '#fff' }}>ชื่อที่แสดง</div>
                   <input style={inp} value={f.line_label} onChange={e => set('line_label', e.target.value)} placeholder="เช่น Line Official" />
                 </div>
                 <div>
-                  <div className="section-label">Line URL (lin.ee/...)</div>
+                  <div className="section-label" style={{ color: '#fff' }}>Line URL (lin.ee/...)</div>
                   <input style={inp} value={f.line_url} onChange={e => set('line_url', e.target.value)} placeholder="https://lin.ee/..." />
                 </div>
                 <div>
-                  <div className="section-label">Line ID</div>
+                  <div className="section-label" style={{ color: '#fff' }}>Line ID</div>
                   <input style={inp} value={f.line_add} onChange={e => set('line_add', e.target.value)} placeholder="@xxxxxxxx" />
                 </div>
                 <div>
-                  <div className="section-label">Line QR Code</div>
+                  <div className="section-label" style={{ color: '#fff' }}>Line QR Code</div>
                   <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
                     {f.line_qr_url && (
                       <img src={f.line_qr_url} alt="QR" style={{ width: 64, height: 64, borderRadius: 8, objectFit: 'cover', border: '1px solid rgba(255,255,255,0.1)', flexShrink: 0 }} />
@@ -2037,19 +2037,19 @@ function ContactAdminModal({ notify, onClose }: {
               </div>
               <div style={{ display: 'grid', gap: 8 }}>
                 <div>
-                  <div className="section-label">เบอร์ที่ 1</div>
+                  <div className="section-label" style={{ color: '#fff' }}>เบอร์ที่ 1</div>
                   <input style={inp} value={f.phone1} onChange={e => set('phone1', e.target.value)} placeholder="0xx-xxx-xxxx" />
                 </div>
                 <div>
-                  <div className="section-label">เบอร์ที่ 2</div>
+                  <div className="section-label" style={{ color: '#fff' }}>เบอร์ที่ 2</div>
                   <input style={inp} value={f.phone2} onChange={e => set('phone2', e.target.value)} placeholder="0xx-xxx-xxxx" />
                 </div>
               </div>
             </div>
 
             {/* Address */}
-            <div style={{ background: '#f8f8f8', border: '1px solid #e8e8e8', borderRadius: 10, padding: 14 }}>
-              <div style={{ fontSize: 12, fontWeight: 700, color: 'rgba(255,255,255,0.7)', marginBottom: 10 }}>📍 ที่อยู่หน้าร้าน</div>
+            <div style={{ background: '#111', border: '1px solid #333', borderRadius: 10, padding: 14 }}>
+              <div style={{ fontSize: 12, fontWeight: 700, color: '#fff', marginBottom: 10 }}>📍 ที่อยู่หน้าร้าน</div>
               <textarea
                 style={{ ...inp, minHeight: 70, resize: 'vertical' as const }}
                 value={f.address}
