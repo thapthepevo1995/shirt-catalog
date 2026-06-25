@@ -1044,12 +1044,12 @@ function SupabaseTypeList({ table, items, setItems, ph, notify }: {
       </div>
       <div style={{ maxHeight: 300, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 5 }}>
         {items.map((item, i) => (
-          <div key={item.id} style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#1a1a1a', padding: '7px 12px', borderRadius: 5 }}>
+          <div key={item.id} style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#1a1a1a', padding: '7px 12px', borderRadius: 5, color: '#fff' }}>
             {ei === i
               ? <><input className="input-d" value={ev} onChange={(e) => setEv(e.target.value)} style={{ flex: 1 }} autoFocus onKeyDown={(e) => e.key === 'Enter' && save(i)} />
                 <button className="btn-red sm" onClick={() => save(i)}>บันทึก</button>
                 <button className="btn-outline sm" onClick={() => setEi(null)}>ยกเลิก</button></>
-              : <><span style={{ flex: 1, fontSize: 13 }}>{item.name}</span>
+              : <><span style={{ flex: 1, fontSize: 13, color: '#fff' }}>{item.name}</span>
                 <button className="btn-outline sm" onClick={() => { setEi(i); setEv(item.name) }}>แก้ไข</button>
                 <button className="btn-red sm" onClick={() => del(i)}>ลบ</button></>
             }
@@ -1080,11 +1080,11 @@ function CollarPriceList({ collars, setCollars, notify }: {
       <div style={{ maxHeight: 340, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 5 }}>
         {collars.map((col) => (
           <div key={col.id} style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#1a1a1a', padding: '7px 12px', borderRadius: 5 }}>
-            <span style={{ flex: 1, fontSize: 13 }}>{col.name}</span>
+            <span style={{ flex: 1, fontSize: 13, color: '#fff' }}>{col.name}</span>
             <input className="input-d" type="number" value={editing[col.id] ?? col.price ?? 0}
               onChange={(e) => setEditing((prev) => ({ ...prev, [col.id]: e.target.value }))}
               style={{ width: 90, textAlign: 'right' }} />
-            <span style={{ fontSize: 11, color: '#aaa', whiteSpace: 'nowrap' }}>THB</span>
+            <span style={{ fontSize: 11, color: '#ccc', whiteSpace: 'nowrap' }}>THB</span>
             <button className="btn-red sm" onClick={() => save(col)}>บันทึก</button>
           </div>
         ))}
@@ -1134,8 +1134,8 @@ function PromotionList({ promotions, setPromotions, notify }: {
         <button className="btn-red sm" onClick={() => { setShowAdd(true); setEditId(null); setF(empty) }}>+ เพิ่ม</button>
       </div>
       {(showAdd || editId) && (
-        <div style={{ background: '#1a1a1a', borderRadius: 8, padding: 14, marginBottom: 12, display: 'grid', gap: 10 }}>
-          <div><div className="section-label">ชื่อโปรโมชั่น</div>
+        <div style={{ background: '#1a1a1a', borderRadius: 8, padding: 14, marginBottom: 12, display: 'grid', gap: 10, color: '#fff' }}>
+          <div><div className="section-label" style={{ color: '#aaa' }}>ชื่อโปรโมชั่น</div>
             <input className="input-d" value={f.name} onChange={(e) => set('name', e.target.value)} placeholder="เช่น โปร 15 ตัว แถม 1" />
           </div>
           <div style={{ display: 'flex', gap: 10 }}>
@@ -1157,7 +1157,7 @@ function PromotionList({ promotions, setPromotions, notify }: {
           {f.type === 'discount_thb' && <div><div className="section-label">ลด (บาท)</div><input className="input-d" type="number" value={f.discount_thb} onChange={(e) => set('discount_thb', Number(e.target.value))} /></div>}
           <label style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}>
             <input type="checkbox" checked={f.is_active} onChange={(e) => set('is_active', e.target.checked)} />
-            <span style={{ fontSize: 13 }}>เปิดใช้งานโปรโมชั่นนี้</span>
+            <span style={{ fontSize: 13, color: '#fff' }}>เปิดใช้งานโปรโมชั่นนี้</span>
           </label>
           <div style={{ display: 'flex', gap: 8 }}>
             <button className="btn-red sm" onClick={save}>💾 บันทึก</button>
@@ -1169,8 +1169,8 @@ function PromotionList({ promotions, setPromotions, notify }: {
         {promotions.map((p) => (
           <div key={p.id} style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#1a1a1a', padding: '8px 12px', borderRadius: 5, border: p.is_active ? '1px solid #c00' : '1px solid transparent' }}>
             <div style={{ flex: 1 }}>
-              <div style={{ fontSize: 13, fontWeight: 600 }}>{p.name}</div>
-              <div style={{ fontSize: 11, color: '#888' }}>สั่ง {p.min_qty}+ ตัว · {TYPE_LABELS[p.type]}{p.type==='free'?` ${p.free_qty} ตัว`:p.type==='discount_qty'?` ${p.discount_qty} ตัว`:p.type==='discount_pct'?` ${p.discount_pct}%`:` ฿${p.discount_thb}`}</div>
+              <div style={{ fontSize: 13, fontWeight: 600, color: '#fff' }}>{p.name}</div>
+              <div style={{ fontSize: 11, color: '#aaa' }}>สั่ง {p.min_qty}+ ตัว · {TYPE_LABELS[p.type]}{p.type==='free'?` ${p.free_qty} ตัว`:p.type==='discount_qty'?` ${p.discount_qty} ตัว`:p.type==='discount_pct'?` ${p.discount_pct}%`:` ฿${p.discount_thb}`}</div>
             </div>
             <span style={{ fontSize: 10, padding: '2px 8px', borderRadius: 10, background: p.is_active ? '#D80000' : '#333', color: '#fff', cursor: 'pointer' }} onClick={() => toggleActive(p)}>{p.is_active ? 'เปิด' : 'ปิด'}</span>
             <button className="btn-outline sm" onClick={() => { setEditId(p.id); setShowAdd(false); setF({ name: p.name, is_active: p.is_active, min_qty: p.min_qty, type: p.type, free_qty: p.free_qty, discount_qty: p.discount_qty, discount_pct: p.discount_pct, discount_thb: p.discount_thb }) }}>แก้ไข</button>
@@ -1218,8 +1218,8 @@ function ShippingList({ shippingRules, setShippingRules, notify }: {
         <button className="btn-red sm" onClick={() => { setShowAdd(true); setEditId(null); setF(empty) }}>+ เพิ่ม</button>
       </div>
       {(showAdd || editId) && (
-        <div style={{ background: '#1a1a1a', borderRadius: 8, padding: 14, marginBottom: 12, display: 'grid', gap: 10 }}>
-          <div><div className="section-label">ชื่อช่องทาง</div>
+        <div style={{ background: '#1a1a1a', borderRadius: 8, padding: 14, marginBottom: 12, display: 'grid', gap: 10, color: '#fff' }}>
+          <div><div className="section-label" style={{ color: '#aaa' }}>ชื่อช่องทาง</div>
             <input className="input-d" value={f.name} onChange={(e) => set('name', e.target.value)} placeholder="เช่น ขนส่งทั่วไป, รถไฟ EMS" />
           </div>
           <div style={{ display: 'flex', gap: 10 }}>
@@ -1243,8 +1243,8 @@ function ShippingList({ shippingRules, setShippingRules, notify }: {
         {shippingRules.map((r) => (
           <div key={r.id} style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#1a1a1a', padding: '8px 12px', borderRadius: 5 }}>
             <div style={{ flex: 1 }}>
-              <div style={{ fontSize: 13, fontWeight: 600 }}>{r.name}</div>
-              <div style={{ fontSize: 11, color: '#888' }}>{r.min_qty}{r.max_qty != null ? `–${r.max_qty}` : '+'} ตัว · ฿{Number(r.price).toLocaleString()}</div>
+              <div style={{ fontSize: 13, fontWeight: 600, color: '#fff' }}>{r.name}</div>
+              <div style={{ fontSize: 11, color: '#aaa' }}>{r.min_qty}{r.max_qty != null ? `–${r.max_qty}` : '+'} ตัว · ฿{Number(r.price).toLocaleString()}</div>
             </div>
             <button className="btn-outline sm" onClick={() => { setEditId(r.id); setShowAdd(false); setF({ name: r.name, min_qty: r.min_qty, max_qty: r.max_qty, price: r.price }) }}>แก้ไข</button>
             <button className="btn-red sm" onClick={() => del(r.id)}>ลบ</button>
@@ -2100,7 +2100,7 @@ function WelcomeModal({ shopSettings, onBrowse, onAdmin }: {
           👕 เข้าชมแบบเสื้อ
         </button>
         <button onClick={onAdmin}
-          style={{ width: '100%', background: '#f5f5f5', color: '#555', border: '1px solid #ddd', padding: '13px', borderRadius: 10, cursor: 'pointer', fontFamily: 'inherit', fontWeight: 600, fontSize: 14, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+          style={{ width: '100%', background: '#111', color: '#fff', border: '1px solid #333', padding: '13px', borderRadius: 10, cursor: 'pointer', fontFamily: 'inherit', fontWeight: 600, fontSize: 14, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
           🔐 เข้าสู่ระบบ Admin
         </button>
       </div>
@@ -2225,7 +2225,7 @@ function ShopAdminModal({ shopSettings, setShopSettings, notify, onClose }: {
             {/* Logo Actions */}
             {logoUrl && (
               <div style={{ display: 'flex', gap: 8 }}>
-                <button className="btn-outline sm" style={{ flex: 1 }} onClick={() => logoInputRef.current?.click()} disabled={uploading}>
+                <button className="btn-black sm" style={{ flex: 1 }} onClick={() => logoInputRef.current?.click()} disabled={uploading}>
                   📷 เปลี่ยนโลโก้
                 </button>
                 {confirmDelete ? (
@@ -2237,7 +2237,7 @@ function ShopAdminModal({ shopSettings, setShopSettings, notify, onClose }: {
                     <button className="btn-outline sm" onClick={() => setConfirmDelete(false)}>ยกเลิก</button>
                   </>
                 ) : (
-                  <button className="btn-outline sm" style={{ flex: 1, color: '#ff6b6b', borderColor: 'rgba(255,107,107,0.3)' }}
+                  <button className="btn-red sm" style={{ flex: 1 }}
                     onClick={() => setConfirmDelete(true)}>
                     🗑️ ลบโลโก้
                   </button>
