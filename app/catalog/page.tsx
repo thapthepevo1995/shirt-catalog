@@ -226,7 +226,7 @@ export default function CatalogPage() {
               </>
             ) : (
               <>
-                <button className="btn-outline sm" onClick={() => setView('cust-login')}>เข้าสู่ระบบ</button>
+                <button className="btn-black sm" onClick={() => setView('cust-login')}>เข้าสู่ระบบ</button>
                 <button className="btn-red sm" onClick={() => setView('admin-login')}>Admin</button>
               </>
             )}
@@ -1695,8 +1695,8 @@ function PriceCalculator({ shirts, collars, promotions, shippingRules, initShirt
               <div style={{ padding: '16px 20px', display: 'grid', gap: 14 }}>
 
                 {/* เลือกแบบ — read-only label */}
-                <div style={{ background: 'rgba(255,255,255,0.02)', borderRadius: 8, border: '1px solid rgba(255,255,255,0.07)', padding: '10px 14px' }}>
-                  <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', marginBottom: 4 }}>แบบที่เลือก</div>
+                <div style={{ background: '#111', borderRadius: 8, border: '1px solid #333', padding: '10px 14px' }}>
+                  <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)', marginBottom: 4 }}>แบบที่เลือก</div>
                   <div style={{ fontWeight: 600, fontSize: 14, color: useCollar ? 'rgba(255,255,255,0.3)' : '#fff' }}>
                     {selectedShirt ? selectedShirt.name : 'ไม่ได้เลือกแบบ'}
                   </div>
@@ -1704,7 +1704,7 @@ function PriceCalculator({ shirts, collars, promotions, shippingRules, initShirt
                     <div style={{ fontSize: 12, color: '#ff4444', marginTop: 2 }}>฿{shirtPrice.toLocaleString()}/ตัว</div>
                   )}
                   {useCollar && (
-                    <div style={{ fontSize: 11, color: '#ffaa44', marginTop: 4 }}>
+                    <div style={{ fontSize: 11, color: '#D80000', marginTop: 4, fontWeight: 600 }}>
                       ⚠️ ราคาจากแบบนี้ถูกแทนที่ด้วยคอเสื้อที่เลือก
                     </div>
                   )}
@@ -1832,12 +1832,12 @@ function PriceCalculator({ shirts, collars, promotions, shippingRules, initShirt
               <div style={{ background: 'linear-gradient(135deg,#c00,#800)', borderRadius: '8px 8px 0 0', padding: '14px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 0 }}>
                 <div style={{ fontWeight: 700, fontSize: 15, color: '#fff' }}>📋 สรุปราคาเบื้องต้น</div>
                 <div style={{ display: 'flex', gap: 8 }}>
-                  <button className="btn-outline sm" style={{ color: '#fff', borderColor: 'rgba(255,255,255,0.4)' }} onClick={() => reset()}>← แก้ไข</button>
+                  <button className="btn-black sm" onClick={() => reset()}>← แก้ไข</button>
                   <button onClick={onClose} style={{ background: 'rgba(255,255,255,0.15)', border: 'none', color: '#fff', width: 28, height: 28, borderRadius: '50%', cursor: 'pointer', fontSize: 13 }}>✕</button>
                 </div>
               </div>
 
-              <div style={{ background: '#f8f8f8', border: '1px solid #e8e8e8', borderRadius: '0 0 10px 10px', padding: '14px 16px', display: 'grid', gap: 8 }}>
+              <div style={{ background: '#111', border: '1px solid #333', borderRadius: '0 0 10px 10px', padding: '14px 16px', display: 'grid', gap: 8 }}>
                 {([
                   !useCollar && ['แบบที่เลือก', selectedShirt ? `${selectedShirt.name} (฿${shirtPrice.toLocaleString()}/ตัว)` : 'เลือกตามแบบ (฿0)'],
                   useCollar && collar && ['คอเสื้อ', `${collar.name} (฿${collarPrice.toLocaleString()}/ตัว)`],
@@ -1848,11 +1848,11 @@ function PriceCalculator({ shirts, collars, promotions, shippingRules, initShirt
                   ['ค่าขนส่ง', isCustomShipping ? 'สอบถาม Admin' : shippingPrice > 0 ? `+฿${shippingPrice.toLocaleString()}` : shipping ? 'ฟรี' : 'ยังไม่เลือก'],
                 ] as any[]).filter(Boolean).map(([label, val]: [string, string]) => (
                   <div key={label} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12 }}>
-                    <span style={{ color: 'rgba(255,255,255,0.5)' }}>{label}</span>
+                    <span style={{ color: 'rgba(255,255,255,0.7)' }}>{label}</span>
                     <span style={{ color: String(val).startsWith('-') ? '#6fdf6f' : String(val).startsWith('🎁') ? '#ff6060' : '#fff' }}>{val}</span>
                   </div>
                 ))}
-                <div style={{ borderTop: '1px solid rgba(255,255,255,0.07)', paddingTop: 8, display: 'flex', justifyContent: 'space-between', fontWeight: 800, fontSize: 22, color: '#ff4444' }}>
+                <div style={{ borderTop: '1px solid rgba(255,255,255,0.12)', paddingTop: 8, display: 'flex', justifyContent: 'space-between', fontWeight: 800, fontSize: 22, color: '#ff4444' }}>
                   <span>รวมทั้งหมด</span>
                   <span>{isCustomShipping ? `฿${subtotal.toLocaleString()} + ขนส่ง` : `฿${grandTotal.toLocaleString()}`}</span>
                 </div>
@@ -1861,7 +1861,7 @@ function PriceCalculator({ shirts, collars, promotions, shippingRules, initShirt
                     🎁 ร้านจะทำเสื้อให้ {qty + bonusQty} ตัว (สั่ง {qty} + แถม {bonusQty})
                   </div>
                 )}
-                <div style={{ fontSize: 10, color: '#ff4444' }}>*ราคาประมาณการ กรุณายืนยันราคาจริงกับทางร้านหรือ Admin</div>
+                <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.5)' }}>*ราคาประมาณการ กรุณายืนยันราคาจริงกับทางร้านหรือ Admin</div>
 
                 {/* ช่องทางติดต่อ */}
                 <div id="summary-card-inner" style={{ display: 'grid', gap: 8, marginTop: 6 }}>
@@ -1884,7 +1884,7 @@ function PriceCalculator({ shirts, collars, promotions, shippingRules, initShirt
                   )}
                   {contact?.phone1 && (
                     <a href={`tel:${contact.phone1}`}
-                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '11px', borderRadius: 8, background: '#1a1a1a', border: '1px solid rgba(255,255,255,0.15)', color: '#ffaa44', textDecoration: 'none', fontWeight: 700, fontSize: 14 }}>
+                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '11px', borderRadius: 8, background: '#ffffff', border: '1px solid #ddd', color: '#0a0a0a', textDecoration: 'none', fontWeight: 700, fontSize: 14 }}>
                       📱 โทร {contact.phone1}
                     </a>
                   )}
